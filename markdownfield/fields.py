@@ -1,14 +1,14 @@
 from functools import partial
 from urllib.parse import urlparse
 
-import bleach
-from bleach.linkifier import LinkifyFilter
 from django.conf import settings
 from django.db.models import TextField
+
+import bleach
+from bleach.linkifier import LinkifyFilter
 from markdown import markdown
 
 from .validators import VALIDATOR_STANDARD
-
 
 EXTENSIONS = getattr(settings, 'MARKDOWN_EXTENSIONS', [])
 EXTENSION_CONFIGS = getattr(settings, 'MARKDOWN_EXTENSION_CONFIGS', [])

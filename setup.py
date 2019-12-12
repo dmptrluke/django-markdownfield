@@ -3,8 +3,12 @@ import setuptools
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
+version = {}
+with open("./markdownfield/version.py") as fp:
+    exec(fp.read(), version)
+
 install_requires = [
-    'Django>=2.2',
+    'django>=2.2',
     'markdown',
     'bleach',
     'bleach_whitelist'
@@ -12,7 +16,7 @@ install_requires = [
 
 setuptools.setup(
     name="django-markdownfield",
-    version="0.1.0",
+    version=version['__version__'],
     author="Luke Rogers",
     author_email="lukeroge@gmail.com",
     description="A markdown field.",

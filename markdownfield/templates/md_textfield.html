@@ -3,8 +3,7 @@
 <script>
     var easyMDE = new EasyMDE({
         element: document.getElementById("id_{{ widget.name }}"),
-        hideIcons: ["guide", "side-by-side", "preview"],
-        status: false,
+        hideIcons: ["side-by-side", "preview"],
         spellChecker: false,
         parsingConfig: {
             allowAtxHeaderWithoutSpace: true,
@@ -13,12 +12,15 @@
 </script>
 <style>
     @media (min-width: 767px) {
-        .cm-s-easymde {
+        .change-form .cm-s-easymde {
             margin-left: 170px;
         }
 
-        .editor-toolbar {
+        .change-form .editor-toolbar {
             margin-left: 170px;
         }
+    }
+    .change-form .cm-s-easymde.CodeMirror-fullscreen, .change-form .editor-toolbar.fullscreen {
+        margin:0 !important;
     }
 </style>

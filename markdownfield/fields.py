@@ -2,6 +2,7 @@ from functools import partial
 from urllib.parse import urlparse
 
 from django.conf import settings
+from django.contrib.admin import widgets as admin_widgets
 from django.db.models import TextField
 
 import bleach
@@ -9,6 +10,7 @@ from bleach.linkifier import LinkifyFilter
 from markdown import markdown
 
 from .validators import VALIDATOR_STANDARD
+from .widgets import EasyMDEEditor
 
 EXTENSIONS = getattr(settings, 'MARKDOWN_EXTENSIONS', [])
 EXTENSION_CONFIGS = getattr(settings, 'MARKDOWN_EXTENSION_CONFIGS', [])
@@ -55,8 +57,16 @@ class MarkdownField(TextField):
                               '>Markdown</a> formatting.'
         super().__init__(*args, **kwargs)
 
+    def formfield(self, **kwargs):
+        defaults = {'widget': EasyMDEEditor()}
+        defaults.update(kwargs)
+
+        if defaults['widget'] == admin_widgets.AdminTextareaWidget:
+            defaults['widget'] = EasyMDEEditor()
+        return super().formfield(**defaults)
+
     def pre_save(self, model_instance, add):
-        value = super(MarkdownField, self).pre_save(model_instance, add)
+        value = super().pre_save(model_instance, add)
 
         if not self.rendered_field:
             return value

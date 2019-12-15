@@ -10,8 +10,7 @@ with open("./markdownfield/version.py") as fp:
 install_requires = [
     'django>=2.2',
     'markdown',
-    'bleach',
-    'bleach_whitelist'
+    'bleach'
 ]
 
 setuptools.setup(

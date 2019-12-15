@@ -1,7 +1,23 @@
 from dataclasses import dataclass
 from typing import List
 
-import bleach_whitelist
+MARKDOWN_TAGS = [
+    "h1", "h2", "h3", "h4", "h5", "h6",
+    "b", "i", "strong", "em", "tt", "del", "abbr"
+    "p", "br",
+    "span", "div", "blockquote", "code", "pre", "hr",
+    "ul", "dl", "ol", "li", "dd", "dt",
+    "img",
+    "a",
+    "sub", "sup",
+]
+
+MARKDOWN_ATTRS = {
+    "*": ["id"],
+    "img": ["src", "alt", "title"],
+    "a": ["href", "alt", "title"],
+    "abbr": ["title"],
+}
 
 
 @dataclass
@@ -19,19 +35,15 @@ VALIDATOR_NULL = Validator(
 )
 
 VALIDATOR_STANDARD = Validator(
-    allowed_tags=bleach_whitelist.markdown_tags + ['pre', 'dl', 'del', 'abbr'],
-    allowed_attrs={
-        **bleach_whitelist.markdown_attrs,
-        'abbr': ['title']
-    },
+    allowed_tags=MARKDOWN_TAGS,
+    allowed_attrs=MARKDOWN_ATTRS,
     sanitize=True
 )
 
 VALIDATOR_CLASSY = Validator(
-    allowed_tags=bleach_whitelist.markdown_tags + ['pre', 'dl', 'del', 'abbr'],
+    allowed_tags=MARKDOWN_TAGS,
     allowed_attrs={
-        **bleach_whitelist.markdown_attrs,
-        'abbr': ['title'],
+        **MARKDOWN_ATTRS,
         'img': ['src', 'alt', 'title', 'class'],
         'a': ['href', 'alt', 'title', 'name', 'class']
     },

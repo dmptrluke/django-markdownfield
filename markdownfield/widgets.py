@@ -1,7 +1,7 @@
 from django.forms import widgets
 
 
-class EasyMDEEditor(widgets.Textarea):
+class MDEditor(widgets.Textarea):
     template_name = 'md_textfield.html'
 
     class Media:
@@ -12,5 +12,14 @@ class EasyMDEEditor(widgets.Textarea):
         css = {
             'all': (
                 'easymde.min.css',
+            )
+        }
+
+
+class AdminMDEditor(MDEditor):
+    class Media:
+        css = {
+            'all': (
+                'md_admin.css',
             )
         }

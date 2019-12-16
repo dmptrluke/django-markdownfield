@@ -10,7 +10,7 @@ from markdown import markdown
 
 from .util import format_link
 from .validators import VALIDATOR_STANDARD
-from .widgets import EasyMDEEditor
+from .widgets import AdminMDEditor, MDEditor
 
 ENABLE_EDITOR = getattr(settings, "MARKDOWN_EASYMDE", True)
 EXTENSIONS = getattr(settings, 'MARKDOWN_EXTENSIONS', [])
@@ -32,11 +32,11 @@ class MarkdownField(TextField):
 
     def formfield(self, **kwargs):
         if ENABLE_EDITOR:
-            defaults = {'widget': EasyMDEEditor()}
+            defaults = {'widget': MDEditor()}
             defaults.update(kwargs)
 
             if defaults['widget'] == admin_widgets.AdminTextareaWidget:
-                defaults['widget'] = EasyMDEEditor()
+                defaults['widget'] = AdminMDEditor()
             return super().formfield(**defaults)
         return super().formfield(**kwargs)
 

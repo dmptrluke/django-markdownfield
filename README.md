@@ -5,6 +5,13 @@ Your text is stored in a `MarkdownField`. When the model is saved, django-markdo
 parse the Markdown, render it, sanitise it with [bleach](https://github.com/mozilla/bleach), and store
 the result in a `RenderedMarkdownField` for display to end users.
 
+django-markdownfield also implements the [EasyMDE](https://github.com/nodecraft/easy-markdown-editor)
+editor in admin views to make working with Markdown easier.
+
+![alt test](screenshots/editor.png)
+
+This can be disabled with `MARKDOWN_EASYMDE=False` in your Django configuration.
+
 ## Implementation
 Implementing django-markdownfield is simple. See the below example.
 

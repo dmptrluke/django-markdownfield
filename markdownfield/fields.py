@@ -12,6 +12,7 @@ from .util import format_link
 from .validators import VALIDATOR_STANDARD
 from .widgets import EasyMDEEditor
 
+ENABLE_EDITOR = getattr(settings, "MARKDOWN_EASYMDE", True)
 EXTENSIONS = getattr(settings, 'MARKDOWN_EXTENSIONS', [])
 EXTENSION_CONFIGS = getattr(settings, 'MARKDOWN_EXTENSION_CONFIGS', [])
 
@@ -30,12 +31,14 @@ class MarkdownField(TextField):
         super().__init__(*args, **kwargs)
 
     def formfield(self, **kwargs):
-        defaults = {'widget': EasyMDEEditor()}
-        defaults.update(kwargs)
+        if ENABLE_EDITOR:
+            defaults = {'widget': EasyMDEEditor()}
+            defaults.update(kwargs)
 
-        if defaults['widget'] == admin_widgets.AdminTextareaWidget:
-            defaults['widget'] = EasyMDEEditor()
-        return super().formfield(**defaults)
+            if defaults['widget'] == admin_widgets.AdminTextareaWidget:
+                defaults['widget'] = EasyMDEEditor()
+            return super().formfield(**defaults)
+        return super().formfield(**kwargs)
 
     def pre_save(self, model_instance, add):
         value = super().pre_save(model_instance, add)

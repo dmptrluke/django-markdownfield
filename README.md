@@ -8,7 +8,7 @@ the result in a `RenderedMarkdownField` for display to end users.
 django-markdownfield also implements the [EasyMDE](https://github.com/nodecraft/easy-markdown-editor)
 editor in admin views to make working with Markdown easier.
 
-![alt test](screenshots/editor.png)
+![alt test](https://raw.githubusercontent.com/dmptrluke/django-markdownfield/master/screenshots/editor.png)
 
 This can be disabled with `MARKDOWN_EASYMDE=False` in your Django configuration.
 

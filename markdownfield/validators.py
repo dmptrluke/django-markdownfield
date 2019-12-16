@@ -25,19 +25,20 @@ class Validator:
     """ defines a standard format for markdown validators """
     allowed_tags: List[str]
     allowed_attrs: dict
-    sanitize: bool
+    sanitize: bool = True
+    linkify: bool = True
 
 
 VALIDATOR_NULL = Validator(
     allowed_tags=[],
     allowed_attrs={},
-    sanitize=False
+    sanitize=False,
+    linkify=False
 )
 
 VALIDATOR_STANDARD = Validator(
     allowed_tags=MARKDOWN_TAGS,
     allowed_attrs=MARKDOWN_ATTRS,
-    sanitize=True
 )
 
 VALIDATOR_CLASSY = Validator(
@@ -47,5 +48,4 @@ VALIDATOR_CLASSY = Validator(
         'img': ['src', 'alt', 'title', 'class'],
         'a': ['href', 'alt', 'title', 'name', 'class']
     },
-    sanitize=True
 )

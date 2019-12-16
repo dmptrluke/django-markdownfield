@@ -2,8 +2,8 @@
 A simple custom field for Django that can safely render Markdown and store it in the database.
 
 Your text is stored in a `MarkdownField`. When the model is saved, django-markdownfield will
-parse the Markdown, render it, sanitise it with [bleach](https://github.com/mozilla/bleach), and store it in `RenderedMarkdownField`
-for display to end users.
+parse the Markdown, render it, sanitise it with [bleach](https://github.com/mozilla/bleach), and store
+the result in a `RenderedMarkdownField` for display to end users.
 
 ## Implementation
 Implementing django-markdownfield is simple. See the below example.
@@ -64,7 +64,7 @@ from markdownfield.validators import Validator
 VALIDATOR_COMMENTS = Validator(
     allowed_tags=["b", "i", "strong", "em"],
     allowed_attrs={},
-    sanitize=True
+    linkify=False
 )
 ```
 
@@ -82,8 +82,7 @@ VALIDATOR_CLASSY = Validator(
         **MARKDOWN_TAGS,
         'img': ['src', 'alt', 'title', 'class'],
         'a': ['href', 'alt', 'title', 'name', 'class']
-    },
-    sanitize=True
+    }
 )
 ```
 

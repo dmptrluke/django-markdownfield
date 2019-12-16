@@ -50,9 +50,14 @@ class MarkdownField(TextField):
         )
 
         if self.validator.sanitize:
-            cleaner = bleach.Cleaner(tags=self.validator.allowed_tags,
-                                     attributes=self.validator.allowed_attrs,
-                                     filters=[partial(LinkifyFilter, callbacks=[format_link])])
+            if self.validator.linkify:
+                cleaner = bleach.Cleaner(tags=self.validator.allowed_tags,
+                                         attributes=self.validator.allowed_attrs,
+                                         filters=[partial(LinkifyFilter, callbacks=[format_link])])
+            else:
+                cleaner = bleach.Cleaner(tags=self.validator.allowed_tags,
+                                         attributes=self.validator.allowed_attrs)
+
             clean = cleaner.clean(dirty)
             setattr(model_instance, self.rendered_field, clean)
         else:

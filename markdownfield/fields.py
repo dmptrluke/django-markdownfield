@@ -10,9 +10,10 @@ from markdown import markdown
 
 from .util import format_link
 from .validators import VALIDATOR_STANDARD
-from .widgets import AdminMDEditor, MDEditor
+from .widgets import MDEAdminWidget, MDEWidget
 
 ENABLE_EDITOR = getattr(settings, "MARKDOWN_EASYMDE", True)
+ENABLE_ADMIN_EDITOR = getattr(settings, "MARKDOWN_ADMIN_EASYMDE", True)
 EXTENSIONS = getattr(settings, 'MARKDOWN_EXTENSIONS', [])
 EXTENSION_CONFIGS = getattr(settings, 'MARKDOWN_EXTENSION_CONFIGS', [])
 
@@ -25,20 +26,26 @@ class RenderedMarkdownField(TextField):
 
 
 class MarkdownField(TextField):
-    def __init__(self, *args, rendered_field=None, validator=VALIDATOR_STANDARD, **kwargs):
+    def __init__(self, *args, rendered_field=None, validator=VALIDATOR_STANDARD,
+                 use_editor=ENABLE_EDITOR, use_admin_editor=ENABLE_ADMIN_EDITOR,  **kwargs):
         self.rendered_field = rendered_field
+        self.use_editor = use_editor
+        self.use_admin_editor = use_admin_editor
         self.validator = validator
         super().__init__(*args, **kwargs)
 
     def formfield(self, **kwargs):
-        if ENABLE_EDITOR:
-            defaults = {'widget': MDEditor()}
-            defaults.update(kwargs)
+        defaults = {}
+        if self.use_editor:
+            defaults = {'widget': MDEWidget()}
 
+        defaults.update(kwargs)
+
+        if self.use_admin_editor:
             if defaults['widget'] == admin_widgets.AdminTextareaWidget:
-                defaults['widget'] = AdminMDEditor()
-            return super().formfield(**defaults)
-        return super().formfield(**kwargs)
+                defaults['widget'] = MDEAdminWidget()
+
+        return super().formfield(**defaults)
 
     def pre_save(self, model_instance, add):
         value = super().pre_save(model_instance, add)

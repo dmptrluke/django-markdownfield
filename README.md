@@ -10,8 +10,6 @@ editor in admin views to make working with Markdown easier.
 
 ![alt test](https://raw.githubusercontent.com/dmptrluke/django-markdownfield/master/screenshots/editor.png)
 
-This can be disabled with `MARKDOWN_EASYMDE=False` in your Django configuration.
-
 ## Implementation
 Implementing django-markdownfield is simple. See the below example.
 
@@ -31,6 +29,12 @@ external links.
 
 ```python
 SITE_URL = "https://example.com"
+```
+
+To disable the EasyMDE editor, see the amended line below.
+
+```python
+text = MarkdownField(rendered_field='text_rendered', use_editor=False, use_admin_editor=True)
 ```
 
 ## Validators

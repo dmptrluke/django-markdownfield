@@ -1,7 +1,7 @@
 from django.forms import widgets
 
 
-class MDEditor(widgets.Textarea):
+class MDEWidget(widgets.Textarea):
     def __init__(self, attrs=None):
         default_attrs = {'class': 'data-easymde'}
         if attrs:
@@ -20,7 +20,7 @@ class MDEditor(widgets.Textarea):
         }
 
 
-class AdminMDEditor(MDEditor):
+class MDEAdminWidget(MDEWidget):
     class Media:
         css = {
             'all': (

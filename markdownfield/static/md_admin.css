@@ -11,3 +11,226 @@
 .cm-s-easymde.CodeMirror-fullscreen, .editor-toolbar.fullscreen {
     margin: 0 !important;
 }
+
+.editor-preview {
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    font-size: 100%;
+    font-size: 1em;
+    line-height: 1.5em
+}
+
+.editor-preview * {
+    line-height: 1.5
+}
+
+.editor-preview a {
+    color: #5b80b2;
+    text-decoration: underline
+}
+
+.editor-preview a:visited {
+    color: #0b0080
+}
+
+.editor-preview a:hover {
+    color: #0645ad
+}
+
+.editor-preview a:active {
+    color: #faa700
+}
+
+.editor-preview a:focus {
+    outline: thin dotted
+}
+
+.editor-preview a:active,
+.editor-preview a:hover {
+    outline: 0
+}
+
+.editor-preview p {
+    margin: 1em 0;
+    padding: 0;
+    font-size: 14px
+}
+
+.editor-preview img {
+    max-width: 100%
+}
+
+.editor-preview h1,
+.editor-preview h2,
+.editor-preview h3,
+.editor-preview h4,
+.editor-preview h5,
+.editor-preview h6 {
+    font-weight: 400;
+    color: #111;
+    margin-top: .75em;
+    margin-bottom: .75em;
+    padding: 0;
+    background: 0 0
+}
+
+.editor-preview h4,
+.editor-preview h5,
+.editor-preview h6 {
+    font-weight: 700
+}
+
+.editor-preview h1 {
+    font-size: 2.5em
+}
+
+.editor-preview h2 {
+    font-size: 2em
+}
+
+.editor-preview h3 {
+    font-size: 1.5em
+}
+
+.editor-preview h4 {
+    font-size: 1.2em
+}
+
+.editor-preview h5 {
+    font-size: 1em
+}
+
+.editor-preview h6 {
+    font-size: .9em
+}
+
+.editor-preview blockquote {
+    color: #666;
+    margin: 0;
+    padding-left: 1.5em;
+    border-left: .5em #eee solid
+}
+
+.editor-preview hr {
+    display: block;
+    height: 0;
+    border: 0;
+    font-style: italic;
+    border-bottom: 1px solid #ccc;
+    margin: 20px 0;
+    padding: 0
+}
+
+.editor-preview code,
+.editor-preview kbd,
+.editor-preview pre,
+.editor-preview samp {
+    font-family: monospace, monospace;
+    font-size: 14px
+}
+
+.editor-preview code,
+.editor-preview pre {
+    margin: 0 2px;
+    padding: 0 5px;
+    border: 1px solid #ddd;
+    background-color: #f8f8f8;
+    border-radius: 2px;
+    color: #444
+}
+
+.editor-preview pre {
+    margin: 1.5em 0 1.5em 0;
+    padding: 1em;
+    white-space: pre;
+    white-space: pre-wrap;
+    word-wrap: break-word
+}
+
+.editor-preview pre code {
+    margin: 0;
+    padding: 0;
+    background: 0 0;
+    border: none
+}
+
+.editor-preview b,
+.editor-preview strong {
+    font-weight: 700
+}
+
+.editor-preview dfn {
+    font-style: italic
+}
+
+.editor-preview ins {
+    background: #ff9;
+    color: #000;
+    text-decoration: none
+}
+
+.editor-preview mark {
+    background: #ff0;
+    color: #000;
+    font-style: italic;
+    font-weight: 700
+}
+
+.editor-preview sub,
+.editor-preview sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline
+}
+
+.editor-preview sup {
+    top: -.5em
+}
+
+.editor-preview sub {
+    bottom: -.25em
+}
+
+.editor-preview ol,
+.editor-preview ul {
+    list-style: unset;
+    margin: 1em 0 !important;
+    padding: 0 0 0 2em !important
+}
+
+.editor-preview ol li,
+.editor-preview ul li {
+    font-size: 14px !important;
+    margin-bottom: .1em
+}
+
+.editor-preview li p:last-child {
+    margin: 0
+}
+
+.editor-preview dd {
+    margin: 0 0 0 2em
+}
+
+.editor-preview img {
+    border: 0;
+    -ms-interpolation-mode: bicubic;
+    vertical-align: middle
+}
+
+.editor-preview table {
+    border-collapse: collapse;
+    border-spacing: 0
+}
+
+.editor-preview th {
+    background: 0 0;
+    background: #f8f8f8;
+    font-size: 14px
+}
+
+.editor-preview td {
+    vertical-align: top;
+    font-size: 14px
+}

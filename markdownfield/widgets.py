@@ -10,12 +10,13 @@ class MDEWidget(widgets.Textarea):
 
     class Media:
         js = (
-            'easymde.min.js', 'md.js'
+            'easymde/easymde.min.js', 'md.js'
         )
 
         css = {
             'all': (
-                'easymde.min.css',
+                'easymde/easymde.min.css',
+                'md.css',
             )
         }
 

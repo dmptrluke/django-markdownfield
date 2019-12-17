@@ -3,7 +3,7 @@ from typing import List
 
 MARKDOWN_TAGS = [
     "h1", "h2", "h3", "h4", "h5", "h6",
-    "b", "i", "strong", "em", "tt", "del", "abbr"
+    "b", "i", "strong", "em", "tt", "del", "abbr",
     "p", "br",
     "span", "div", "blockquote", "code", "pre", "hr",
     "ul", "dl", "ol", "li", "dd", "dt",

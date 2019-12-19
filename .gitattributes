@@ -1,0 +1,18 @@
+# Normalize line endings.
+* text=auto
+
+# Explicitly declare binary files.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.jfif binary
+*.ico binary
+*.webp binary
+*.webm binary
+
+# Correct Github language graph.
+*.tpl linguist-language=HTML+Django
+*.html linguist-language=HTML+Django
+
+# Hide diffs for package-lock.
+package-lock.json -diff

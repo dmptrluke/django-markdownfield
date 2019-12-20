@@ -10,13 +10,14 @@ class MDEWidget(widgets.Textarea):
 
     class Media:
         js = (
-            'easymde/easymde.min.js', 'md.js'
+            'markdownfield/easymde/easymde.min.js',
+            'markdownfield/md.js',
         )
 
         css = {
             'all': (
-                'easymde/easymde.min.css',
-                'md.css',
+                'markdownfield/easymde/easymde.min.css',
+                'markdownfield/md.css',
             )
         }
 
@@ -25,6 +26,6 @@ class MDEAdminWidget(MDEWidget):
     class Media:
         css = {
             'all': (
-                'md_admin.css',
+                'markdownfield/md_admin.css',
             )
         }

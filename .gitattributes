@@ -1,8 +1,31 @@
 # Normalize line endings.
 * text=auto
 
+# Explicitly declare text files.
+*.py text diff=python
+*.html text diff=html
+*.tpl text diff=html
+*.css text diff=css
+*.scss text diff=css
+*.webmanifest text
+*.txt text
+*.md text
+*.json text
+*.xml text
+*.yaml text
+*.svg text
+*.yml text
+*.ini text
+*.js text
+
+Procfile text
+.gitignore text
+.gitattributes text
+.editorconfig text
+
 # Explicitly declare binary files.
 *.png binary
+*.gif binary
 *.jpg binary
 *.jpeg binary
 *.jfif binary

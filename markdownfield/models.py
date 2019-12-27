@@ -26,7 +26,7 @@ class RenderedMarkdownField(TextField):
         super().__init__(*args, **kwargs)
 
     def get_internal_type(self):
-        return 'RenderedMarkdownField (TextField)'
+        return 'TextField'
 
 
 class MarkdownField(TextField):
@@ -39,7 +39,7 @@ class MarkdownField(TextField):
         super().__init__(*args, **kwargs)
 
     def get_internal_type(self):
-        return 'MarkdownField (TextField)'
+        return 'TextField'
 
     def formfield(self, **kwargs):
         defaults = {}

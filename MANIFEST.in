@@ -4,4 +4,4 @@ include markdownfield/static/markdownfield/*
 include markdownfield/static/markdownfield/easymde/*
 include markdownfield/static/markdownfield/fontawesome/*
 include markdownfield/static/markdownfield/fontawesome/fonts/*
-include markdownfield/templates/*
+include markdownfield/templates/markdownfield/*

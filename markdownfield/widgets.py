@@ -2,8 +2,12 @@ from django.forms import widgets
 
 
 class MDEWidget(widgets.Textarea):
+    template_name = 'markdownfield/widget.html'
+
     def __init__(self, attrs=None):
-        default_attrs = {'class': 'data-easymde'}
+        default_attrs = {
+            'class': 'data-easymde'
+        }
         if attrs:
             default_attrs.update(attrs)
         super().__init__(default_attrs)
@@ -11,18 +15,20 @@ class MDEWidget(widgets.Textarea):
     class Media:
         js = (
             'markdownfield/easymde/easymde.min.js',
-            'markdownfield/md.js',
         )
 
         css = {
             'all': (
                 'markdownfield/easymde/easymde.min.css',
+                'markdownfield/fontawesome/font-awesome.min.css',
                 'markdownfield/md.css',
             )
         }
 
 
 class MDEAdminWidget(MDEWidget):
+    template_name = 'markdownfield/widget.html'
+
     class Media:
         css = {
             'all': (

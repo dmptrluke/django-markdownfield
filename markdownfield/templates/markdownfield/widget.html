@@ -1,0 +1,12 @@
+{% include 'django/forms/widgets/textarea.html' %}
+
+<script nonce="{{ csp_nonce }}" type="text/javascript">
+    new EasyMDE({
+            element: document.getElementById('{{ widget.attrs.id }}'),
+            hideIcons: ["side-by-side", "preview"],
+            spellChecker: false,
+            parsingConfig: {
+                allowAtxHeaderWithoutSpace: true,
+            }
+        });
+</script>

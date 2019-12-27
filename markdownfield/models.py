@@ -8,9 +8,10 @@ import bleach
 from bleach.linkifier import LinkifyFilter
 from markdown import markdown
 
+from .forms import MarkdownFormField
 from .util import format_link
 from .validators import VALIDATOR_STANDARD
-from .widgets import MDEAdminWidget, MDEWidget
+from .widgets import MDEAdminWidget
 
 ENABLE_EDITOR = getattr(settings, "MARKDOWN_EASYMDE", True)
 ENABLE_ADMIN_EDITOR = getattr(settings, "MARKDOWN_ADMIN_EASYMDE", True)
@@ -24,20 +25,26 @@ class RenderedMarkdownField(TextField):
         kwargs['blank'] = False
         super().__init__(*args, **kwargs)
 
+    def get_internal_type(self):
+        return 'RenderedMarkdownField (TextField)'
+
 
 class MarkdownField(TextField):
     def __init__(self, *args, rendered_field=None, validator=VALIDATOR_STANDARD,
-                 use_editor=ENABLE_EDITOR, use_admin_editor=ENABLE_ADMIN_EDITOR,  **kwargs):
+                 use_editor=ENABLE_EDITOR, use_admin_editor=ENABLE_ADMIN_EDITOR, **kwargs):
         self.rendered_field = rendered_field
         self.use_editor = use_editor
         self.use_admin_editor = use_admin_editor
         self.validator = validator
         super().__init__(*args, **kwargs)
 
+    def get_internal_type(self):
+        return 'MarkdownField (TextField)'
+
     def formfield(self, **kwargs):
         defaults = {}
         if self.use_editor:
-            defaults = {'widget': MDEWidget()}
+            defaults = {'form_class': MarkdownFormField}
 
         defaults.update(kwargs)
 

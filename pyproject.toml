@@ -1,0 +1,35 @@
+[build-system]
+requires = ["flit_core >=2,<3"]
+build-backend = "flit_core.buildapi"
+
+[tool.flit.metadata]
+dist-name = "django-markdownfield"
+module = "markdownfield"
+description-file = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Development Status :: 4 - Beta",
+    "Framework :: Django",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+author = "Luke Rogers"
+author-email = "luke@dmptr.com"
+home-page = "https://github.com/dmptrluke/django-markdownfield"
+requires-python=">=3.6"
+requires = [
+    'django>=2.2',
+    'dataclasses; python_version == "3.6"',
+]
+
+[tool.isort]
+line_length = 100
+skip_glob = "*/node_modules/*,*/.tox/*,*/.git/*"
+balanced_wrapping = true
+known_third_party = ["bleach", "markdown"]
+known_django = ["django"]
+sections = ["FUTURE","STDLIB","DJANGO","THIRDPARTY","FIRSTPARTY","LOCALFOLDER"]

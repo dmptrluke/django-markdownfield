@@ -93,14 +93,14 @@ You can also find a standard set of markdown-safe tags and attrs in `markdownfie
 that.
 
 ```python
-from markdownfield.validators import Validator, MARKDOWN_TAGS, MARKDOWN_TAGS
+from markdownfield.validators import Validator, MARKDOWN_TAGS, MARKDOWN_ATTRS
 
 # allows all standard markdown features,
 # but also allows the class to be set on images and links
 VALIDATOR_CLASSY = Validator(
     allowed_tags=MARKDOWN_TAGS,
     allowed_attrs={
-        **MARKDOWN_TAGS,
+        **MARKDOWN_ATTRS,
         'img': ['src', 'alt', 'title', 'class'],
         'a': ['href', 'alt', 'title', 'name', 'class']
     }

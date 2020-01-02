@@ -16,7 +16,7 @@ Implementing django-markdownfield is simple. See the below example.
 ```python
 from django.db import models
 
-from markdownfield.fields import MarkdownField, RenderedMarkdownField
+from markdownfield.models import MarkdownField, RenderedMarkdownField
 from markdownfield.validators import VALIDATOR_STANDARD
 
 class Page(models.Model):
@@ -35,6 +35,16 @@ To disable the EasyMDE editor, see the amended line below.
 
 ```python
 text = MarkdownField(rendered_field='text_rendered', use_editor=False, use_admin_editor=True)
+```
+
+### Use in templates
+
+To use the rendered markdown in templates, just use the `RenderedMarkdownField()` you created on
+your model, like below. This field should be marked as safe with the `safe` filter to ensure it
+displays correctly.
+
+```djangotemplate
+{{ post.text_rendered | safe }}
 ```
 
 ## Validators

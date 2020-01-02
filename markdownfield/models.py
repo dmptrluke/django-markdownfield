@@ -10,7 +10,7 @@ from markdown import markdown
 
 from .forms import MarkdownFormField
 from .util import format_link
-from .validators import VALIDATOR_STANDARD
+from .validators import VALIDATOR_STANDARD, Validator
 from .widgets import MDEAdminWidget
 
 ENABLE_EDITOR = getattr(settings, "MARKDOWN_EASYMDE", True)
@@ -20,6 +20,12 @@ EXTENSION_CONFIGS = getattr(settings, 'MARKDOWN_EXTENSION_CONFIGS', [])
 
 
 class RenderedMarkdownField(TextField):
+    """
+    RenderedMarkdownField is pretty much just a plain textfield that doesn't show up in the admin panel.
+
+    Using a custom field type also allows more functionality (eg; custom display rules, automatic mark_safe)
+    to be added in the future.
+    """
     def __init__(self, *args, **kwargs):
         kwargs['editable'] = False
         kwargs['blank'] = False
@@ -30,8 +36,12 @@ class RenderedMarkdownField(TextField):
 
 
 class MarkdownField(TextField):
-    def __init__(self, *args, rendered_field=None, validator=VALIDATOR_STANDARD,
-                 use_editor=ENABLE_EDITOR, use_admin_editor=ENABLE_ADMIN_EDITOR, **kwargs):
+    def __init__(self, *args,
+                 rendered_field: str = None,
+                 validator: Validator = VALIDATOR_STANDARD,
+                 use_editor: bool = ENABLE_EDITOR,
+                 use_admin_editor: bool = ENABLE_ADMIN_EDITOR,
+                 **kwargs):
         self.rendered_field = rendered_field
         self.use_editor = use_editor
         self.use_admin_editor = use_admin_editor

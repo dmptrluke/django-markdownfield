@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List
+from typing import Dict, List
 
 MARKDOWN_TAGS = [
     "h1", "h2", "h3", "h4", "h5", "h6",
@@ -24,7 +24,7 @@ MARKDOWN_ATTRS = {
 class Validator:
     """ defines a standard format for markdown validators """
     allowed_tags: List[str]
-    allowed_attrs: dict
+    allowed_attrs: Dict[str, List[str]]
     sanitize: bool = True
     linkify: bool = True
 

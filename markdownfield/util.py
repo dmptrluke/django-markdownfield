@@ -1,9 +1,10 @@
+from typing import Dict
 from urllib.parse import urlparse
 
 from django.conf import settings
 
 
-def format_link(attrs, new=False):
+def format_link(attrs: Dict[tuple, str], new: bool = False):
     """
     This is really weird and ugly, but that's how bleach linkify filters work.
     """

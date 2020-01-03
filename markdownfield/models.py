@@ -13,8 +13,6 @@ from .util import format_link
 from .validators import VALIDATOR_STANDARD, Validator
 from .widgets import MDEAdminWidget
 
-ENABLE_EDITOR = getattr(settings, "MARKDOWN_EASYMDE", True)
-ENABLE_ADMIN_EDITOR = getattr(settings, "MARKDOWN_ADMIN_EASYMDE", True)
 EXTENSIONS = getattr(settings, 'MARKDOWN_EXTENSIONS', [])
 EXTENSION_CONFIGS = getattr(settings, 'MARKDOWN_EXTENSION_CONFIGS', [])
 
@@ -26,21 +24,25 @@ class RenderedMarkdownField(TextField):
     Using a custom field type also allows more functionality (eg; custom display rules, automatic mark_safe)
     to be added in the future.
     """
+
     def __init__(self, *args, **kwargs):
         kwargs['editable'] = False
         kwargs['blank'] = False
         super().__init__(*args, **kwargs)
 
-    def get_internal_type(self):
-        return 'TextField'
+    def deconstruct(self):
+        name, path, args, kwargs = super().deconstruct()
+        del kwargs['editable']
+        del kwargs['blank']
+        return name, path, args, kwargs
 
 
 class MarkdownField(TextField):
     def __init__(self, *args,
                  rendered_field: str = None,
                  validator: Validator = VALIDATOR_STANDARD,
-                 use_editor: bool = ENABLE_EDITOR,
-                 use_admin_editor: bool = ENABLE_ADMIN_EDITOR,
+                 use_editor: bool = True,
+                 use_admin_editor: bool = True,
                  **kwargs):
         self.rendered_field = rendered_field
         self.use_editor = use_editor
@@ -48,8 +50,16 @@ class MarkdownField(TextField):
         self.validator = validator
         super().__init__(*args, **kwargs)
 
-    def get_internal_type(self):
-        return 'TextField'
+    def deconstruct(self):
+        # todo: deconstruct validators. maybe.
+        name, path, args, kwargs = super().deconstruct()
+        if self.rendered_field is not None:
+            kwargs['rendered_field'] = self.rendered_field
+        if self.use_editor is not True:
+            kwargs['use_editor'] = self.use_editor
+        if self.use_admin_editor is not True:
+            kwargs['use_admin_editor'] = self.use_admin_editor
+        return name, path, args, kwargs
 
     def formfield(self, **kwargs):
         defaults = {}

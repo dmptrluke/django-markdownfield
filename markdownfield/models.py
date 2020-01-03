@@ -33,7 +33,6 @@ class RenderedMarkdownField(TextField):
     def deconstruct(self):
         name, path, args, kwargs = super().deconstruct()
         del kwargs['editable']
-        del kwargs['blank']
         return name, path, args, kwargs
 
 

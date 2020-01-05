@@ -3,6 +3,19 @@ from urllib.parse import urlparse
 
 from django.conf import settings
 
+BLACKLIST = getattr(settings, 'MARKDOWN_LINKIFY_BLACKLIST', [])
+
+
+def blacklist_link(attrs: Dict[tuple, str], new: bool = False):
+    try:
+        p = urlparse(attrs[(None, 'href')])
+    except KeyError:
+        return attrs
+
+    if (p.netloc in BLACKLIST) and new:
+        return None
+    return attrs
+
 
 def format_link(attrs: Dict[tuple, str], new: bool = False):
     """

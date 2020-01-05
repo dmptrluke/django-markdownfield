@@ -9,7 +9,7 @@ from bleach.linkifier import LinkifyFilter
 from markdown import markdown
 
 from .forms import MarkdownFormField
-from .util import format_link
+from .util import blacklist_link, format_link
 from .validators import VALIDATOR_STANDARD, Validator
 from .widgets import MDEAdminWidget
 
@@ -89,7 +89,8 @@ class MarkdownField(TextField):
             if self.validator.linkify:
                 cleaner = bleach.Cleaner(tags=self.validator.allowed_tags,
                                          attributes=self.validator.allowed_attrs,
-                                         filters=[partial(LinkifyFilter, callbacks=[format_link])])
+                                         filters=[partial(LinkifyFilter,
+                                                          callbacks=[format_link, blacklist_link])])
             else:
                 cleaner = bleach.Cleaner(tags=self.validator.allowed_tags,
                                          attributes=self.validator.allowed_attrs)

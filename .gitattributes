@@ -32,11 +32,6 @@ Procfile text
 *.ico binary
 *.webp binary
 *.webm binary
-*.woff binary
-*.woff2 binary
-*.eot binary
-*.ttf binary
-*.otf binary
 
 # Correct Github language graph.
 *.tpl linguist-language=HTML+Django

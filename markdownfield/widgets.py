@@ -1,16 +1,28 @@
 from django.forms import widgets
 
+import shortuuid
+
 
 class MDEWidget(widgets.Textarea):
     template_name = 'markdownfield/widget.html'
 
-    def __init__(self, attrs=None):
-        default_attrs = {
-            'class': 'data-easymde'
-        }
-        if attrs:
-            default_attrs.update(attrs)
-        super().__init__(default_attrs)
+    def __init__(self, options=None, **kwargs):
+        super().__init__(**kwargs)
+        self.uuid = shortuuid.uuid()
+
+        if options is None:
+            options = {}
+
+        self.options = options
+        self.options_id = 'options_' + self.uuid
+
+    def get_context(self, *args):
+        context = super().get_context(*args)
+        context.update({
+            'options': self.options,
+            'options_id': self.options_id,
+        })
+        return context
 
     class Media:
         js = (

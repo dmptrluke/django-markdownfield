@@ -1,12 +1,13 @@
 {% include 'django/forms/widgets/textarea.html' %}
-
+{{ options | json_script:options_id }}
 <script nonce="{{ csp_nonce }}" type="text/javascript">
-    new EasyMDE({
-            element: document.getElementById('{{ widget.attrs.id }}'),
-            hideIcons: ["side-by-side", "preview"],
-            spellChecker: false,
-            parsingConfig: {
-                allowAtxHeaderWithoutSpace: true,
-            }
-        });
+    const {{ widget.name }}_options = JSON.parse(document.getElementById('{{ options_id }}').textContent);
+    const {{ widget.name }}_editor = new EasyMDE(Object.assign({
+        element: document.getElementById('{{ widget.attrs.id }}'),
+        hideIcons: ["side-by-side", "preview"],
+        spellChecker: false,
+        parsingConfig: {
+            allowAtxHeaderWithoutSpace: true,
+        }
+    }, {{ widget.name }}_options));
 </script>

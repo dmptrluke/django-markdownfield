@@ -13,6 +13,10 @@ editor in admin views to make working with Markdown easier.
 ## Implementation
 Implementing django-markdownfield is simple. See the below example.
 
+First add `django-markdownfield` to your requirements or install simply with pip.
+Then add `'markdownfield',` to your INSTALLED_APPS.
+
+
 ```python
 from django.db import models
 
@@ -105,6 +109,45 @@ VALIDATOR_CLASSY = Validator(
         'a': ['href', 'alt', 'title', 'name', 'class']
     }
 )
+```
+
+## Migrations
+
+If you need to migrate from TextField or CharField to the MarkdownField you need to migrate the stored `text` also in the `rendered_text` field.
+Update your auto-created migration fiele and add the method below. 
+Use a method to `save()` every instance of your model once after the migrations, so the text will be copied into the `text_rendered` field correctly.
+
+```
+from django.db import migrations
+import markdownfield.models
+
+
+def save_text_rendered(apps, schema_editor):
+    ExampleModel = apps.get_model('yourapp', 'ExampleModel')
+    for examplemodel in ExampleModel.objects.all():
+        examplemodel.save()
+
+
+class Migration(migrations.Migration):
+
+    dependencies = [
+        ('yourapp', '000X_migrate_to_markdownfield'),
+    ]
+
+    operations = [
+        migrations.AddField(
+            model_name='yourapp',
+            name='text_rendered',
+            field=markdownfield.models.RenderedMarkdownField(default=''),
+            preserve_default=False,
+        ),
+        migrations.AlterField(
+            model_name='ExampleModel',
+            name='text',
+            field=markdownfield.models.MarkdownField(rendered_field='text_rendered'),
+        ),
+        migrations.RunPython(save_text_rendered),
+    ]
 ```
 
 ## License

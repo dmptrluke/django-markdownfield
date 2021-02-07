@@ -14,7 +14,7 @@ from .validators import VALIDATOR_STANDARD, Validator
 from .widgets import MDEAdminWidget
 
 EXTENSIONS = getattr(settings, 'MARKDOWN_EXTENSIONS', [])
-EXTENSION_CONFIGS = getattr(settings, 'MARKDOWN_EXTENSION_CONFIGS', [])
+EXTENSION_CONFIGS = getattr(settings, 'MARKDOWN_EXTENSION_CONFIGS', {})
 
 
 class RenderedMarkdownField(TextField):

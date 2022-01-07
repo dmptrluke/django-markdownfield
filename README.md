@@ -117,7 +117,7 @@ If you need to migrate from TextField or CharField to the MarkdownField you need
 Update your auto-created migration fiele and add the method below. 
 Use a method to `save()` every instance of your model once after the migrations, so the text will be copied into the `text_rendered` field correctly.
 
-```
+```python
 from django.db import migrations
 import markdownfield.models
 

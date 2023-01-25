@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 from bleach.css_sanitizer import CSSSanitizer
 
@@ -27,7 +27,7 @@ class Validator:
     """ defines a standard format for markdown validators """
     allowed_tags: List[str]
     allowed_attrs: Dict[str, List[str]]
-    css_sanitizer: CSSSanitizer = None
+    css_sanitizer: Optional[CSSSanitizer] = None
     sanitize: bool = True
     linkify: bool = True
 

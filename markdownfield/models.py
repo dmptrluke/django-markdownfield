@@ -68,7 +68,7 @@ class MarkdownField(TextField):
         defaults.update(kwargs)
 
         if self.use_admin_editor:
-            if defaults['widget'] == admin_widgets.AdminTextareaWidget:
+            if 'widget' in defaults and defaults['widget'] == admin_widgets.AdminTextareaWidget:
                 defaults['widget'] = MDEAdminWidget()
 
         return super().formfield(**defaults)

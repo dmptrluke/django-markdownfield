@@ -10,7 +10,18 @@ editor (v2.14.0) in admin views to make working with Markdown easier.
 
 ![alt test](https://raw.githubusercontent.com/dmptrluke/django-markdownfield/master/screenshots/editor.png)
 
-## Implementation
+## Installation
+
+django-markdownfield can be installed from PyPi:
+
+```console
+# Install directly or add to your requirements.txt
+pip install django-markdownfield
+```
+
+After installation, you need to add `markdownfield` to `INSTALLED_APPS` of your Django project's settings.
+
+## Usage
 Implementing django-markdownfield is simple. See the below example.
 
 ```python

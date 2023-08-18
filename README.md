@@ -11,6 +11,15 @@ editor (v2.14.0) in admin views to make working with Markdown easier.
 ![alt test](https://raw.githubusercontent.com/dmptrluke/django-markdownfield/master/screenshots/editor.png)
 
 ## Implementation
+
+First, you must add "markdownfield" to your INSTALLED_APPS in settings.py
+```python
+INSTALLED_APPS = [
+    "markdownfield",
+    ...
+    "django.contrib.staticfiles",
+]
+```
 Implementing django-markdownfield is simple. See the below example.
 
 ```python

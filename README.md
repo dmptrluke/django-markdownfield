@@ -5,12 +5,32 @@ Your text is stored in a `MarkdownField`. When the model is saved, django-markdo
 parse the Markdown, render it, sanitise it with [bleach](https://github.com/mozilla/bleach), and store
 the result in a `RenderedMarkdownField` for display to end users.
 
-django-markdownfield also implements the [EasyMDE](https://github.com/nodecraft/easy-markdown-editor)
-editor in admin views to make working with Markdown easier.
+django-markdownfield also bundles a minified version of the [EasyMDE](https://github.com/Ionaru/easy-markdown-editor)
+editor (v2.14.0) in admin views to make working with Markdown easier.
 
 ![alt test](https://raw.githubusercontent.com/dmptrluke/django-markdownfield/master/screenshots/editor.png)
 
-## Implementation
+## Installation
+
+django-markdownfield can be installed from PyPi:
+
+```console
+# Install directly or add to your requirements.txt
+pip install django-markdownfield
+```
+
+After installation, you need to add `markdownfield` to `INSTALLED_APPS` of your Django project's settings.
+
+```python
+INSTALLED_APPS = [
+    "markdownfield",
+    ...
+    "django.contrib.staticfiles",
+]
+```
+
+## Usage
+
 Implementing django-markdownfield is simple. See the below example.
 
 First add `django-markdownfield` to your requirements or install simply with pip.
@@ -154,7 +174,7 @@ class Migration(migrations.Migration):
 
 This software is released under the MIT license.
 ```
-Copyright (c) 2019 Luke Rogers
+Copyright (c) 2019-2021 Luke Rogers
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

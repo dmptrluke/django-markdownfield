@@ -1,5 +1,5 @@
 [build-system]
-requires = ["flit_core >=3.4"]
+requires = ["flit_core >=3.4,<4"]
 build-backend = "flit_core.buildapi"
 
 [tool.flit.metadata]
@@ -8,9 +8,10 @@ module = "markdownfield"
 description-file = "README.md"
 classifiers = [
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.6",
-    "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
     "Development Status :: 4 - Beta",
     "Framework :: Django",
     "Intended Audience :: Developers",
@@ -20,7 +21,7 @@ classifiers = [
 author = "Luke Rogers"
 author-email = "luke@dmptr.com"
 home-page = "https://github.com/dmptrluke/django-markdownfield"
-requires-python=">=3.6"
+requires-python=">=3.8"
 requires = [
     'django>=3.2',
     'bleach',

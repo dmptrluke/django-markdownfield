@@ -22,7 +22,7 @@ author-email = "luke@dmptr.com"
 home-page = "https://github.com/dmptrluke/django-markdownfield"
 requires-python=">=3.6"
 requires = [
-    'django>=2.2',
+    'django>=3.2',
     'bleach',
     'markdown',
     'shortuuid',

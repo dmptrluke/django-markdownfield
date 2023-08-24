@@ -39,9 +39,9 @@ def format_link(attrs: Dict[tuple, str], new: bool = False):
         link_is_external = True
 
     if link_is_external:
-            # link is external - secure and mark
-            attrs[(None, 'target')] = '_blank'
-            attrs[(None, 'class')] = attrs.get((None, 'class'), '') + ' external'
-            attrs[(None, 'rel')] = 'nofollow noopener noreferrer'
+        # link is external - secure and mark
+        attrs[(None, 'target')] = '_blank'
+        attrs[(None, 'class')] = attrs.get((None, 'class'), '') + ' external'
+        attrs[(None, 'rel')] = 'nofollow noopener noreferrer'
 
     return attrs

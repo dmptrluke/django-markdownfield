@@ -12,6 +12,32 @@
     margin: 0 !important;
 }
 
+.EasyMDEContainer .editor-toolbar {
+    background-color: var(--primary);
+    border: none;
+}
+
+.EasyMDEContainer .editor-toolbar button {
+    color: var(--button-fg);
+    background-color: var(--button-bg);
+}
+
+.EasyMDEContainer .editor-toolbar button:hover,
+.EasyMDEContainer .editor-toolbar button.active {
+    border: none;
+    background-color: var(--button-hover-bg);
+}
+
+.EasyMDEContainer .CodeMirror {
+    color: var(--body-fg);
+    background-color: var(--body-bg);
+    border: 1px solid var(--border-color) !important;
+}
+
+.EasyMDEContainer .CodeMirror-cursor {
+    border-left: 1px solid var(--body-fg) !important;
+}
+
 .editor-preview {
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;

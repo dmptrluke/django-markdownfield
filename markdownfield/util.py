@@ -31,8 +31,14 @@ def format_link(attrs: Dict[tuple, str], new: bool = False):
         # the link isn't going anywhere, probably a fragment link
         return attrs
 
-    c = urlparse(settings.SITE_URL)
-    if p.netloc != c.netloc:
+    if hasattr(settings, 'SITE_URL'):
+        c = urlparse(settings.SITE_URL)
+        link_is_external = p.netloc != c.netloc
+    else:
+        # Assume true for safety
+        link_is_external = True
+
+    if link_is_external:
         # link is external - secure and mark
         attrs[(None, 'target')] = '_blank'
         attrs[(None, 'class')] = attrs.get((None, 'class'), '') + ' external'

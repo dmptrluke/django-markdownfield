@@ -33,9 +33,6 @@ INSTALLED_APPS = [
 
 Implementing django-markdownfield is simple. See the below example.
 
-First add `django-markdownfield` to your requirements or install simply with pip.
-Then add `'markdownfield',` to your INSTALLED_APPS.
-
 
 ```python
 from django.db import models

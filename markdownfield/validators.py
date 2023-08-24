@@ -1,5 +1,7 @@
 from dataclasses import dataclass
-from typing import Dict, List
+from typing import Dict, List, Optional
+
+from bleach.css_sanitizer import CSSSanitizer
 
 MARKDOWN_TAGS = [
     "h1", "h2", "h3", "h4", "h5", "h6",
@@ -25,6 +27,7 @@ class Validator:
     """ defines a standard format for markdown validators """
     allowed_tags: List[str]
     allowed_attrs: Dict[str, List[str]]
+    css_sanitizer: Optional[CSSSanitizer] = None
     sanitize: bool = True
     linkify: bool = True
 

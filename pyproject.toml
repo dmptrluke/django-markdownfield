@@ -24,7 +24,7 @@ home-page = "https://github.com/dmptrluke/django-markdownfield"
 requires-python=">=3.8"
 requires = [
     'django>=3.2',
-    'bleach',
+    'bleach[css]>=5.0.1',
     'markdown',
     'shortuuid',
     'dataclasses; python_version == "3.6"',

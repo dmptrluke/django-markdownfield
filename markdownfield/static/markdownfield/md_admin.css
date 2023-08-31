@@ -1,15 +1,6 @@
-@media (min-width: 767px) {
-    .cm-s-easymde {
-        margin-left: 170px;
-    }
-
-    .editor-toolbar {
-        margin-left: 170px;
-    }
-}
-
 .cm-s-easymde.CodeMirror-fullscreen, .editor-toolbar.fullscreen {
     margin: 0 !important;
+    z-index: 20;
 }
 
 .EasyMDEContainer .editor-toolbar {

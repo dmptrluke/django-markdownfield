@@ -58,7 +58,48 @@ To disable the EasyMDE editor, see the amended line below.
 text = MarkdownField(rendered_field='text_rendered', use_editor=False, use_admin_editor=True)
 ```
 
-### Use in templates
+### Use directly as a form field
+
+When using the Django admin, a MarkdownField automatically renders with the special MDEWidget.
+
+In order to make this happen on your own site, you have to do a bit more work:
+
+```python
+from django import forms
+from markdownfield.widgets import MDEWidget
+
+class MyForm(forms.Form):
+
+    body = forms.CharField(widget=MDEWidget())
+```
+
+The above widget automatically adds [Django form media](https://docs.djangoproject.com/en/4.2/topics/forms/media/) to the form class.
+
+Some JavaScript and CSS files need to be included for the MDE editor, and every time that the form field is rendered, an additional JavaScript snippet is added to load the editor for that particular form field.
+
+This means that you have to do a bit of work in your template:
+
+
+```djangotemplate
+
+<form method="post" action="{% url 'my:view' %}">
+{% csrf_token %}
+
+{# Load all general form media #}
+{# The MDE editor has to be loaded BEFORE rendering form fields #}
+{{ form.media }}
+
+{# Render the form fields #}
+{{ form.as_p }}
+
+<input type="submit" value="{% trans "Send a 1-time login" %}">
+</form>
+```
+
+**Using CSP?** Currently, the above method can break some setups, as it expects to run inline code. If you want to fix this, your Pull Request is most welcome 🙏️
+
+
+### Render in templates
 
 To use the rendered markdown in templates, just use the `RenderedMarkdownField()` you created on
 your model, like below. This field should be marked as safe with the `safe` filter to ensure it

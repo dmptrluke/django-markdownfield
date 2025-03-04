@@ -131,7 +131,7 @@ VALIDATOR_CLASSY = Validator(
 ## Migrations
 
 If you need to migrate from TextField or CharField to the MarkdownField you need to migrate the stored `text` also in the `rendered_text` field.
-Update your auto-created migration fiele and add the method below. 
+Update your auto-created migration file and add the method below. 
 Use a method to `save()` every instance of your model once after the migrations, so the text will be copied into the `text_rendered` field correctly.
 
 ```python

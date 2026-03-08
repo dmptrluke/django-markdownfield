@@ -1,6 +1,5 @@
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
-exclude: 'node_modules|storage|build|.git|.pytest_cache|.tox'
 default_language_version:
     python: python3.13
 repos:

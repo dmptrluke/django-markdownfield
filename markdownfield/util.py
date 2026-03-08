@@ -1,4 +1,3 @@
-from typing import Dict
 from urllib.parse import urlparse
 
 from django.conf import settings
@@ -6,7 +5,7 @@ from django.conf import settings
 BLACKLIST = getattr(settings, 'MARKDOWN_LINKIFY_BLACKLIST', [])
 
 
-def blacklist_link(attrs: Dict[tuple, str], new: bool = False):
+def blacklist_link(attrs: dict[tuple, str], new: bool = False):
     try:
         p = urlparse(attrs[(None, 'href')])
     except KeyError:
@@ -17,7 +16,7 @@ def blacklist_link(attrs: Dict[tuple, str], new: bool = False):
     return attrs
 
 
-def format_link(attrs: Dict[tuple, str], new: bool = False):
+def format_link(attrs: dict[tuple, str], new: bool = False):
     """
     This is really weird and ugly, but that's how bleach linkify filters work.
     """

@@ -18,16 +18,16 @@ class MDEWidget(widgets.Textarea):
 
     def get_context(self, *args):
         context = super().get_context(*args)
-        context.update({
-            'options': self.options,
-            'options_id': self.options_id,
-        })
+        context.update(
+            {
+                'options': self.options,
+                'options_id': self.options_id,
+            }
+        )
         return context
 
     class Media:
-        js = (
-            'markdownfield/easymde/easymde.min.js',
-        )
+        js = ('markdownfield/easymde/easymde.min.js',)
 
         css = {
             'all': (
@@ -42,8 +42,4 @@ class MDEAdminWidget(MDEWidget):
     template_name = 'markdownfield/widget.html'
 
     class Media:
-        css = {
-            'all': (
-                'markdownfield/md_admin.css',
-            )
-        }
+        css = {'all': ('markdownfield/md_admin.css',)}

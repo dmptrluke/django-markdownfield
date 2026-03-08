@@ -1,34 +1,44 @@
 [build-system]
-requires = ["flit_core >=3.4,<4"]
-build-backend = "flit_core.buildapi"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
-[tool.flit.metadata]
-dist-name = "django-markdownfield"
-module = "markdownfield"
-description-file = "README.md"
+[project]
+name = "django-markdownfield"
+dynamic = ["version"]
+description = "A simple custom field for Django that can safely render Markdown and store it in the database."
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "Luke Rogers", email = "luke@dmptr.com"},
+]
 classifiers = [
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Development Status :: 4 - Beta",
     "Framework :: Django",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
-author = "Luke Rogers"
-author-email = "luke@dmptr.com"
-home-page = "https://github.com/dmptrluke/django-markdownfield"
-requires-python=">=3.8"
-requires = [
-    'django>=3.2',
-    'bleach[css]>=5.0.1',
-    'markdown',
-    'shortuuid',
-    'dataclasses; python_version == "3.6"',
+dependencies = [
+    "django>=3.2",
+    "bleach[css]>=5.0.1",
+    "markdown",
+    "shortuuid",
 ]
+
+[tool.hatch.version]
+path = "markdownfield/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["markdownfield"]
+
+[project.urls]
+Homepage = "https://github.com/dmptrluke/django-markdownfield"
 
 [tool.ruff]
 target-version = "py310"

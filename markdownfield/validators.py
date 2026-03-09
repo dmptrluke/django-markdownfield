@@ -36,7 +36,7 @@ MARKDOWN_TAGS = {
 
 MARKDOWN_ATTRS = {
     '*': {'id'},
-    'img': {'src', 'alt', 'title'},
+    'img': {'src', 'alt', 'title', 'width', 'height'},
     'a': {'href', 'alt', 'title'},
     'abbr': {'title'},
 }
@@ -54,6 +54,13 @@ class Validator:
     sanitize: bool = True
 
 
+VALIDATOR_BASIC = Validator(
+    allowed_tags={'b', 'i', 'strong', 'em', 'del', 'code', 'p', 'br', 'a'},
+    allowed_attrs={
+        'a': {'href', 'alt', 'title'},
+    },
+)
+
 VALIDATOR_NULL = Validator(allowed_tags=set(), allowed_attrs={}, sanitize=False)
 
 VALIDATOR_STANDARD = Validator(
@@ -65,7 +72,7 @@ VALIDATOR_CLASSY = Validator(
     allowed_tags=MARKDOWN_TAGS,
     allowed_attrs={
         **MARKDOWN_ATTRS,
-        'img': {'src', 'alt', 'title', 'class'},
+        'img': {'src', 'alt', 'title', 'width', 'height', 'class'},
         'a': {'href', 'alt', 'title', 'name', 'class'},
     },
     generic_attribute_prefixes={'data-'},

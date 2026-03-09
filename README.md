@@ -93,6 +93,12 @@ from markdownfield.validators import VALIDATOR_CLASSY
 Like `VALIDATOR_STANDARD`, but also allows `class` on links and images, and permits `data-*`
 attributes. Useful for creating styled buttons and enhanced links.
 
+### VALIDATOR_BASIC
+```python
+from markdownfield.validators import VALIDATOR_BASIC
+```
+Allows only inline formatting: bold, italic, strikethrough, inline code, and links.
+
 ### VALIDATOR_NULL
 ```python
 from markdownfield.validators import VALIDATOR_NULL

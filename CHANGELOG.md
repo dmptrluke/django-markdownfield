@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.13.0 (2026-03-09)
+
+### Changes
+
+- Added `VALIDATOR_BASIC` preset — allows only inline formatting (`b`, `i`, `strong`, `em`, `del`, `code`, `a`, `p`, `br`). Suitable for comments, bios, and short user-generated content.
+- `width` and `height` are now allowed attributes on `<img>` in `VALIDATOR_STANDARD` and `VALIDATOR_CLASSY`.
+
 ## 0.12.1 (2026-03-09)
 
 ### Fixes

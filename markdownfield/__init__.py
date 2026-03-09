@@ -1,3 +1,3 @@
 """A simple custom field for Django that can safely render Markdown and store it in the database."""
 
-__version__ = '0.12.1'
+__version__ = '0.13.0'

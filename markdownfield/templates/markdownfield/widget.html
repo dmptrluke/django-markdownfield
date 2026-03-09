@@ -7,6 +7,7 @@
     const options = JSON.parse(document.getElementById('{{ options_id }}').textContent);
     new EasyMDE(Object.assign({
         element: document.getElementById('{{ widget.attrs.id }}'),
+        autoDownloadFontAwesome: false,
         hideIcons: ['side-by-side', 'preview'],
         spellChecker: false,
         parsingConfig: {

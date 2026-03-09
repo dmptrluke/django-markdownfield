@@ -32,6 +32,15 @@
     border-left: 1px solid var(--body-fg) !important;
 }
 
+.EasyMDEContainer .CodeMirror-selected,
+.EasyMDEContainer .CodeMirror-focused .CodeMirror-selected {
+    background: Highlight;
+}
+
+.EasyMDEContainer .CodeMirror-activeline-background {
+    background: var(--selected-bg);
+}
+
 .editor-preview {
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;

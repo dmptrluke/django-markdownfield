@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.12.1 (2026-03-09)
+
+### Fixes
+
+- Editor widget script now uses an IIFE, fixing a `SyntaxError` when the widget is used in Django formsets or admin inlines where field names contain hyphens (e.g. `form-0-body`). Also prevents variable collisions when multiple markdown fields appear on the same page. ([#13](https://github.com/dmptrluke/django-markdownfield/issues/13), [#38](https://github.com/dmptrluke/django-markdownfield/issues/38))
+
 ## 0.12.0 (2026-03-09)
 
 ### Breaking changes

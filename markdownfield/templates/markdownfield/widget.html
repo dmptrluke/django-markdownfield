@@ -3,13 +3,15 @@
 {% if csp_nonce %}<script nonce="{{ csp_nonce }}" type="text/javascript">
 {% elif request.csp_nonce %}<script nonce="{{ request.csp_nonce }}" type="text/javascript">
 {% else %}<script type="text/javascript">{% endif %}
-    const {{ widget.name }}_options = JSON.parse(document.getElementById('{{ options_id }}').textContent);
-    const {{ widget.name }}_editor = new EasyMDE(Object.assign({
+(function() {
+    const options = JSON.parse(document.getElementById('{{ options_id }}').textContent);
+    new EasyMDE(Object.assign({
         element: document.getElementById('{{ widget.attrs.id }}'),
-        hideIcons: ["side-by-side", "preview"],
+        hideIcons: ['side-by-side', 'preview'],
         spellChecker: false,
         parsingConfig: {
             allowAtxHeaderWithoutSpace: true,
-        }
-    }, {{ widget.name }}_options));
+        },
+    }, options));
+})();
 </script>

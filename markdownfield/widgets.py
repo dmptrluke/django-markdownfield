@@ -39,7 +39,13 @@ class MDEWidget(widgets.Textarea):
 
 
 class MDEAdminWidget(MDEWidget):
-    template_name = 'markdownfield/widget.html'
-
     class Media:
-        css = {'all': ('markdownfield/md_admin.css',)}
+        extend = False
+        js = ('markdownfield/easymde/easymde.min.js',)
+        css = {
+            'all': (
+                'markdownfield/easymde/easymde.min.css',
+                'markdownfield/fontawesome/font-awesome.min.css',
+                'markdownfield/md_admin.css',
+            )
+        }

@@ -1,8 +1,6 @@
 from dataclasses import dataclass
 
-from bleach.css_sanitizer import CSSSanitizer
-
-MARKDOWN_TAGS = [
+MARKDOWN_TAGS = {
     'h1',
     'h2',
     'h3',
@@ -34,13 +32,13 @@ MARKDOWN_TAGS = [
     'a',
     'sub',
     'sup',
-]
+}
 
 MARKDOWN_ATTRS = {
-    '*': ['id'],
-    'img': ['src', 'alt', 'title'],
-    'a': ['href', 'alt', 'title'],
-    'abbr': ['title'],
+    '*': {'id'},
+    'img': {'src', 'alt', 'title'},
+    'a': {'href', 'alt', 'title'},
+    'abbr': {'title'},
 }
 
 
@@ -48,14 +46,15 @@ MARKDOWN_ATTRS = {
 class Validator:
     """defines a standard format for markdown validators"""
 
-    allowed_tags: list[str]
-    allowed_attrs: dict[str, list[str]]
-    css_sanitizer: CSSSanitizer | None = None
+    allowed_tags: set[str]
+    allowed_attrs: dict[str, set[str]]
+    filter_style_properties: set[str] | None = None
+    generic_attribute_prefixes: set[str] | None = None
+    url_schemes: set[str] | None = None
     sanitize: bool = True
-    linkify: bool = True
 
 
-VALIDATOR_NULL = Validator(allowed_tags=[], allowed_attrs={}, sanitize=False, linkify=False)
+VALIDATOR_NULL = Validator(allowed_tags=set(), allowed_attrs={}, sanitize=False)
 
 VALIDATOR_STANDARD = Validator(
     allowed_tags=MARKDOWN_TAGS,
@@ -66,7 +65,8 @@ VALIDATOR_CLASSY = Validator(
     allowed_tags=MARKDOWN_TAGS,
     allowed_attrs={
         **MARKDOWN_ATTRS,
-        'img': ['src', 'alt', 'title', 'class'],
-        'a': ['href', 'alt', 'title', 'name', 'class'],
+        'img': {'src', 'alt', 'title', 'class'},
+        'a': {'href', 'alt', 'title', 'name', 'class'},
     },
+    generic_attribute_prefixes={'data-'},
 )

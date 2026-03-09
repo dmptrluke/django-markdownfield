@@ -1,15 +1,12 @@
-from functools import partial
-
 from django.conf import settings
 from django.contrib.admin import widgets as admin_widgets
 from django.db.models import TextField
 
-import bleach
-from bleach.linkifier import LinkifyFilter
+import nh3
 from markdown import markdown
 
 from .forms import MarkdownFormField
-from .util import blacklist_link, format_link
+from .util import process_links
 from .validators import VALIDATOR_STANDARD, Validator
 from .widgets import MDEAdminWidget
 
@@ -84,24 +81,20 @@ class MarkdownField(TextField):
         dirty = markdown(text=value, extensions=EXTENSIONS, extension_configs=EXTENSION_CONFIGS)
 
         if self.validator.sanitize:
-            if self.validator.linkify:
-                cleaner = bleach.Cleaner(
-                    tags=self.validator.allowed_tags,
-                    attributes=self.validator.allowed_attrs,
-                    css_sanitizer=self.validator.css_sanitizer,
-                    filters=[partial(LinkifyFilter, callbacks=[format_link, blacklist_link])],
-                )
-            else:
-                cleaner = bleach.Cleaner(
-                    tags=self.validator.allowed_tags,
-                    attributes=self.validator.allowed_attrs,
-                    css_sanitizer=self.validator.css_sanitizer,
-                )
-
-            clean = cleaner.clean(dirty)
-            setattr(model_instance, self.rendered_field, clean)
+            clean = nh3.clean(
+                dirty,
+                tags=self.validator.allowed_tags,
+                attributes=self.validator.allowed_attrs,
+                clean_content_tags={'script', 'style'},
+                link_rel='nofollow noopener noreferrer',
+                filter_style_properties=self.validator.filter_style_properties,
+                generic_attribute_prefixes=self.validator.generic_attribute_prefixes,
+                url_schemes=self.validator.url_schemes,
+            )
+            clean = process_links(clean)
         else:
             # danger!
-            setattr(model_instance, self.rendered_field, dirty)
+            clean = dirty
 
+        setattr(model_instance, self.rendered_field, clean)
         return value

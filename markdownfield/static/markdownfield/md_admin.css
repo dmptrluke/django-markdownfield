@@ -4,19 +4,22 @@
 }
 
 .EasyMDEContainer .editor-toolbar {
-    background-color: var(--primary);
+    background-color: var(--header-bg);
     border: none;
 }
 
 .EasyMDEContainer .editor-toolbar button {
     color: var(--button-fg);
-    background-color: var(--button-bg);
+    background-color: var(--header-bg);
+    border: none;
+    box-shadow: none;
 }
 
 .EasyMDEContainer .editor-toolbar button:hover,
 .EasyMDEContainer .editor-toolbar button.active {
     border: none;
     background-color: var(--button-hover-bg);
+    box-shadow: none;
 }
 
 .EasyMDEContainer .CodeMirror {

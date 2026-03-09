@@ -47,7 +47,7 @@ class Page(models.Model):
 
 To display rendered Markdown in a template, use the `RenderedMarkdownField` and mark it safe:
 
-```djangotemplate
+```jinja
 {{ post.text_rendered | safe }}
 ```
 
@@ -68,7 +68,7 @@ text = MarkdownField(rendered_field='text_rendered', use_admin_editor=False)
 The editor widget is also included automatically in frontend `ModelForm`s. You must include the
 form's media in your template or the editor's JavaScript and CSS will not load:
 
-```djangotemplate
+```jinja
 <head>
     {{ form.media.css }}
 </head>

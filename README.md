@@ -6,7 +6,7 @@ parse the Markdown, render it, sanitise it with [nh3](https://github.com/messens
 the result in a `RenderedMarkdownField` for display to end users.
 
 django-markdownfield also bundles a minified version of the [EasyMDE](https://github.com/Ionaru/easy-markdown-editor)
-editor (v2.14.0) in admin views to make working with Markdown easier.
+editor (v2.20.0) in admin views to make working with Markdown easier.
 
 ![Editor screenshot](https://raw.githubusercontent.com/dmptrluke/django-markdownfield/master/screenshots/editor.png)
 

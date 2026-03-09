@@ -47,6 +47,7 @@ MY_VALIDATOR = Validator(
 
 ### Changes
 
+- Bundled EasyMDE updated from v2.14.0 to v2.20.0.
 - `<script>` and `<style>` tags are now fully removed including their content (`clean_content_tags`), rather than just stripping the tag and leaving the text visible.
 - External links now receive `rel="nofollow noopener noreferrer"` via nh3's native `link_rel` parameter.
 - `Validator` now supports `url_schemes: set[str] | None` to restrict which URL schemes are permitted in `href`/`src` attributes (e.g. `{'http', 'https', 'mailto'}`). Defaults to `None` (nh3 built-in safe defaults).

@@ -26,7 +26,7 @@ classifiers = [
 ]
 dependencies = [
     "django>=3.2",
-    "bleach[css]>=5.0.1",
+    "nh3",
     "markdown",
     "shortuuid",
 ]

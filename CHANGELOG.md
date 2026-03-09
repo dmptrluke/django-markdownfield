@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.13.1 (2026-03-09)
+
+### Changes
+
+- Improved README: restructured editor documentation into Admin and Frontend sections, added frontend form media example and EasyMDE options example.
+
 ## 0.13.0 (2026-03-09)
 
 ### Changes

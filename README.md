@@ -6,7 +6,7 @@ parse the Markdown, render it, sanitise it with [nh3](https://github.com/messens
 the result in a `RenderedMarkdownField` for display to end users.
 
 django-markdownfield also bundles a minified version of the [EasyMDE](https://github.com/Ionaru/easy-markdown-editor)
-editor (v2.20.0) in admin views to make working with Markdown easier.
+editor (v2.20.0) for use in admin and frontend forms.
 
 ![Editor screenshot](https://raw.githubusercontent.com/dmptrluke/django-markdownfield/master/screenshots/editor.png)
 
@@ -30,7 +30,7 @@ INSTALLED_APPS = [
 
 ## Usage
 
-Implementing django-markdownfield is simple. See the below example.
+Add a `MarkdownField` and a paired `RenderedMarkdownField` to your model:
 
 ```python
 from django.db import models
@@ -43,25 +43,66 @@ class Page(models.Model):
     text_rendered = RenderedMarkdownField()
 ```
 
-To disable the EasyMDE editor in frontend forms:
+## Displaying content
 
-```python
-text = MarkdownField(rendered_field='text_rendered', use_editor=False)
+To display rendered Markdown in a template, use the `RenderedMarkdownField` and mark it safe:
+
+```djangotemplate
+{{ post.text_rendered | safe }}
 ```
 
-To disable it in the Django admin:
+## Editor
+
+The bundled EasyMDE editor is available in both admin and frontend forms.
+
+### Admin
+
+The EasyMDE editor is enabled automatically in the Django admin. To disable it:
 
 ```python
 text = MarkdownField(rendered_field='text_rendered', use_admin_editor=False)
 ```
 
-### Use in templates
+### Frontend forms
 
-To display the rendered Markdown in a template, use the `RenderedMarkdownField` you defined on your
-model and mark it as safe with the `safe` filter:
+The editor widget is also included automatically in frontend `ModelForm`s. You must include the
+form's media in your template or the editor's JavaScript and CSS will not load:
 
 ```djangotemplate
-{{ post.text_rendered | safe }}
+<head>
+    {{ form.media.css }}
+</head>
+<body>
+    <form method="post">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">Save</button>
+    </form>
+    {{ form.media.js }}
+</body>
+```
+
+To disable the editor in frontend forms:
+
+```python
+text = MarkdownField(rendered_field='text_rendered', use_editor=False)
+```
+
+To customise the EasyMDE options, override the widget in your form. Any
+[EasyMDE configuration option](https://github.com/Ionaru/easy-markdown-editor#options-list) can be
+passed via the `options` dict:
+
+```python
+from django import forms
+from markdownfield.widgets import MDEWidget
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['text']
+        widgets = {
+            'text': MDEWidget(options={'toolbar': ['bold', 'italic', 'link']}),
+        }
 ```
 
 ## Configuration
@@ -125,7 +166,7 @@ You can also extend the built-in tag and attribute sets:
 ```python
 from markdownfield.validators import Validator, MARKDOWN_TAGS, MARKDOWN_ATTRS
 
-VALIDATOR_CLASSY = Validator(
+VALIDATOR_CUSTOM = Validator(
     allowed_tags=MARKDOWN_TAGS,
     allowed_attrs={
         **MARKDOWN_ATTRS,

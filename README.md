@@ -2,20 +2,19 @@
 A simple custom field for Django that can safely render Markdown and store it in the database.
 
 Your text is stored in a `MarkdownField`. When the model is saved, django-markdownfield will
-parse the Markdown, render it, sanitise it with [bleach](https://github.com/mozilla/bleach), and store
+parse the Markdown, render it, sanitise it with [nh3](https://github.com/messense/nh3), and store
 the result in a `RenderedMarkdownField` for display to end users.
 
 django-markdownfield also bundles a minified version of the [EasyMDE](https://github.com/Ionaru/easy-markdown-editor)
 editor (v2.14.0) in admin views to make working with Markdown easier.
 
-![alt test](https://raw.githubusercontent.com/dmptrluke/django-markdownfield/master/screenshots/editor.png)
+![Editor screenshot](https://raw.githubusercontent.com/dmptrluke/django-markdownfield/master/screenshots/editor.png)
 
 ## Installation
 
-django-markdownfield can be installed from PyPi:
+django-markdownfield can be installed from PyPI:
 
 ```console
-# Install directly or add to your requirements.txt
 pip install django-markdownfield
 ```
 
@@ -33,7 +32,6 @@ INSTALLED_APPS = [
 
 Implementing django-markdownfield is simple. See the below example.
 
-
 ```python
 from django.db import models
 
@@ -45,94 +43,121 @@ class Page(models.Model):
     text_rendered = RenderedMarkdownField()
 ```
 
-Please also set `SITE_URL` in your Django configuration - it will be needed for detecting
-external links.
+To disable the EasyMDE editor in frontend forms:
 
 ```python
-SITE_URL = "https://example.com"
+text = MarkdownField(rendered_field='text_rendered', use_editor=False)
 ```
 
-To disable the EasyMDE editor, see the amended line below.
+To disable it in the Django admin:
 
 ```python
-text = MarkdownField(rendered_field='text_rendered', use_editor=False, use_admin_editor=True)
+text = MarkdownField(rendered_field='text_rendered', use_admin_editor=False)
 ```
 
 ### Use in templates
 
-To use the rendered markdown in templates, just use the `RenderedMarkdownField()` you created on
-your model, like below. This field should be marked as safe with the `safe` filter to ensure it
-displays correctly.
+To display the rendered Markdown in a template, use the `RenderedMarkdownField` you defined on your
+model and mark it as safe with the `safe` filter:
 
 ```djangotemplate
 {{ post.text_rendered | safe }}
 ```
 
+## Configuration
+
+All settings are optional.
+
+| Setting | Default | Description |
+|---|---|---|
+| `SITE_URL` | `None` | Your site's base URL (e.g. `"https://example.com"`). Used to distinguish internal from external links. Without it, all links are treated as external. |
+| `MARKDOWN_EXTENSIONS` | `['fenced_code']` | List of [Python-Markdown extensions](https://python-markdown.github.io/extensions/) to enable. |
+| `MARKDOWN_EXTENSION_CONFIGS` | `{}` | Configuration for Markdown extensions. |
+| `MARKDOWN_LINK_BLACKLIST` | `[]` | List of domains whose `<a>` links should be stripped from output (e.g. `['spam.example.com']`). The link text is preserved; only the link itself is removed. |
+| `MARKDOWN_MARK_EXTERNAL_LINKS` | `True` | When `True`, external links receive `target="_blank"` and `class="external"`. Set to `False` to disable. |
+
 ## Validators
-django-markdownfield comes with a number of validators, which are used to process and clean
-the output of the markdown engine
+
+django-markdownfield comes with a number of validators, which are used to process and clean the output of the Markdown engine.
 
 ### VALIDATOR_STANDARD
 ```python
 from markdownfield.validators import VALIDATOR_STANDARD
 ```
-This validator strips any tags that are not used by standard Markdown. It also automatically links
-any URLs in the output, adding `class="external"`, `rel="nofollow noopener noreferrer"`, and
-`target="_blank"` to any URLs which it determines to be external.
+This validator strips any tags not used by standard Markdown.
 
 ### VALIDATOR_CLASSY
 ```python
 from markdownfield.validators import VALIDATOR_CLASSY
 ```
-This validator does much the same as `VALIDATOR_STANDARD`, but it allows you to set the class on
-links and images. This is useful to create buttons and other enhanced links.
+Like `VALIDATOR_STANDARD`, but also allows `class` on links and images, and permits `data-*`
+attributes. Useful for creating styled buttons and enhanced links.
 
 ### VALIDATOR_NULL
 ```python
 from markdownfield.validators import VALIDATOR_NULL
 ```
-This validator does not call [bleach](https://github.com/mozilla/bleach) to sanitize the output at all.
-This is **not safe for user input**.  It allows arbitrary (unsafe) HTML in your markdown input.
+Skips sanitization entirely. **Not safe for user input.** Allows arbitrary HTML in Markdown input.
 
 
 ### Creating Custom Validators
-To create a custom validator, just create an instance of  the `markdownfield.validators.Validator`
-dataclass. An example of this is shown below.
+
+To create a custom validator, create an instance of the `markdownfield.validators.Validator` dataclass:
 
 ```python
 from markdownfield.validators import Validator
 
 # allows only bold and italic text
 VALIDATOR_COMMENTS = Validator(
-    allowed_tags=["b", "i", "strong", "em"],
+    allowed_tags={'b', 'i', 'strong', 'em'},
     allowed_attrs={},
-    linkify=False
 )
 ```
 
-You can also find a standard set of markdown-safe tags and attrs in `markdownfield.validators`, and extend
-that.
+You can also extend the built-in tag and attribute sets:
 
 ```python
 from markdownfield.validators import Validator, MARKDOWN_TAGS, MARKDOWN_ATTRS
 
-# allows all standard markdown features,
-# but also allows the class to be set on images and links
 VALIDATOR_CLASSY = Validator(
     allowed_tags=MARKDOWN_TAGS,
     allowed_attrs={
         **MARKDOWN_ATTRS,
-        'img': ['src', 'alt', 'title', 'class'],
-        'a': ['href', 'alt', 'title', 'name', 'class']
-    }
+        'img': {'src', 'alt', 'title', 'class'},
+        'a': {'href', 'alt', 'title', 'name', 'class'},
+    },
+    generic_attribute_prefixes={'data-'},
+)
+```
+
+To allow inline CSS but restrict which properties are permitted:
+
+```python
+VALIDATOR_STYLED = Validator(
+    allowed_tags=MARKDOWN_TAGS,
+    allowed_attrs={
+        **MARKDOWN_ATTRS,
+        '*': {'id', 'style'},
+    },
+    filter_style_properties={'color', 'font-weight', 'text-align'},
+)
+```
+
+Note: `filter_style_properties` has no effect unless `style` is included in `allowed_attrs`. If `style` is allowed but `filter_style_properties` is not set, all CSS properties are permitted.
+
+To restrict permitted URL schemes (e.g. block `javascript:` or custom schemes):
+
+```python
+VALIDATOR_STRICT = Validator(
+    allowed_tags=MARKDOWN_TAGS,
+    allowed_attrs=MARKDOWN_ATTRS,
+    url_schemes={'http', 'https', 'mailto'},
 )
 ```
 
 ## Migrations
 
-If you need to migrate from TextField or CharField to the MarkdownField you need to migrate the stored `text` also in the `rendered_text` field.
-Update your auto-created migration file and add the method below. 
-Use a method to `save()` every instance of your model once after the migrations, so the text will be copied into the `text_rendered` field correctly.
+If you need to migrate from `TextField` or `CharField` to `MarkdownField`, add a `RunPython` step to your migration that calls `save()` on every existing instance so the rendered field is populated:
 
 ```python
 from django.db import migrations
@@ -171,7 +196,7 @@ class Migration(migrations.Migration):
 
 This software is released under the MIT license.
 ```
-Copyright (c) 2019-2021 Luke Rogers
+Copyright (c) 2019-2026 Luke Rogers
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

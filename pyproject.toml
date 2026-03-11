@@ -64,6 +64,7 @@ select = [
 ]
 ignore = [
     "RUF012",  # mutable class attrs (false positive for Django)
+    "SIM103",  # return condition directly
     "SIM108",  # ternary operator
 ]
 

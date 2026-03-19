@@ -20,12 +20,15 @@ classifiers = [
     "Programming Language :: Python :: 3.13",
     "Development Status :: 4 - Beta",
     "Framework :: Django",
+    "Framework :: Django :: 4.2",
+    "Framework :: Django :: 5.2",
+    "Framework :: Django :: 6.0",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
 dependencies = [
-    "django>=3.2",
+    "django>=4.2",
     "nh3",
     "markdown",
     "shortuuid",

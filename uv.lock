@@ -65,7 +65,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "django", specifier = ">=3.2" },
+    { name = "django", specifier = ">=4.2" },
     { name = "markdown" },
     { name = "nh3" },
     { name = "shortuuid" },

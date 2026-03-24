@@ -1,6 +1,12 @@
 # Changelog
 
-## Unreleased
+## 0.14.0 (2026-03-25)
+
+### Changed
+
+- Bump minimum Django version to 4.2.
+- Add CI and release workflows, update Django classifiers.
+- Update code blocks from `djangotemplate` to `jinja` language hint.
 
 ## 0.13.2 (2026-03-09)
 

@@ -6,9 +6,6 @@ from markdown import markdown
 from .util import process_links
 from .validators import VALIDATOR_STANDARD
 
-EXTENSIONS = getattr(settings, 'MARKDOWN_EXTENSIONS', ['fenced_code'])
-EXTENSION_CONFIGS = getattr(settings, 'MARKDOWN_EXTENSION_CONFIGS', {})
-
 
 def render_markdown(text, validator=VALIDATOR_STANDARD):
     """Render markdown text to sanitized HTML.
@@ -19,7 +16,10 @@ def render_markdown(text, validator=VALIDATOR_STANDARD):
     if not text:
         return ''
 
-    dirty = markdown(text=text, extensions=EXTENSIONS, extension_configs=EXTENSION_CONFIGS)
+    extensions = getattr(settings, 'MARKDOWN_EXTENSIONS', ['fenced_code'])
+    extension_configs = getattr(settings, 'MARKDOWN_EXTENSION_CONFIGS', {})
+
+    dirty = markdown(text=text, extensions=extensions, extension_configs=extension_configs)
 
     if validator.sanitize:
         clean = nh3.clean(

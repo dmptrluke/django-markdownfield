@@ -5,7 +5,7 @@ from django.utils.safestring import mark_safe
 from .forms import MarkdownFormField
 from .rendering import render_markdown
 from .validators import VALIDATOR_STANDARD, Validator
-from .widgets import MDEAdminWidget
+from .widgets import MDEAdminWidget, MDEWidget
 
 
 class RenderedMarkdownField(TextField):
@@ -62,7 +62,7 @@ class MarkdownField(TextField):
     def formfield(self, **kwargs):
         defaults = {}
         if self.use_editor:
-            defaults = {'form_class': MarkdownFormField}
+            defaults = {'form_class': MarkdownFormField, 'widget': MDEWidget}
 
         defaults.update(kwargs)
 

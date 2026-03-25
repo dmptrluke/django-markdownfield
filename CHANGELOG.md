@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.16.0 (2026-03-26)
+
+### Added
+
+- Added test suite (70 tests) covering rendering, validators, fields, link processing, preview endpoint, forms, template filter, system checks, and management command.
+
+### Fixed
+
+- Fixed `render_markdown` template filter output being auto-escaped in templates. `{{ text|render_markdown }}` now renders HTML correctly instead of showing raw tags.
+- Fixed `MarkdownField.formfield()` returning a plain `Textarea` instead of `MDEWidget` when `use_editor=True`. Frontend ModelForms now get the EasyMDE editor widget.
+- Fixed `MARKDOWN_EXTENSIONS`, `MARKDOWN_EXTENSION_CONFIGS`, `MARKDOWN_LINK_BLACKLIST`, and `MARKDOWN_MARK_EXTERNAL_LINKS` settings being read at import time. Runtime changes via Django settings (e.g. `override_settings` in tests) now take effect.
+
 ## 0.15.1 (2026-03-25)
 
 ### Fixed

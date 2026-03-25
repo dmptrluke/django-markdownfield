@@ -3,13 +3,13 @@ from urllib.parse import urlparse
 
 from django.conf import settings
 
-BLACKLIST = getattr(settings, 'MARKDOWN_LINK_BLACKLIST', [])
-MARK_EXTERNAL_LINKS = getattr(settings, 'MARKDOWN_MARK_EXTERNAL_LINKS', True)
-
 
 def process_links(html: str) -> str:
     """Strip blacklisted links; optionally add target="_blank" and class="external" to external links."""
-    if not BLACKLIST and not MARK_EXTERNAL_LINKS:
+    blacklist = getattr(settings, 'MARKDOWN_LINK_BLACKLIST', [])
+    mark_external_links = getattr(settings, 'MARKDOWN_MARK_EXTERNAL_LINKS', True)
+
+    if not blacklist and not mark_external_links:
         return html
 
     if hasattr(settings, 'SITE_URL'):
@@ -17,17 +17,17 @@ def process_links(html: str) -> str:
     else:
         site_netloc = None
 
-    if BLACKLIST:
+    if blacklist:
 
         def strip_blacklisted(match: re.Match) -> str:
             href_match = re.search(r'href="([^"]*)"', match.group(0))
-            if href_match and urlparse(href_match.group(1)).netloc in BLACKLIST:
+            if href_match and urlparse(href_match.group(1)).netloc in blacklist:
                 return match.group(1)
             return match.group(0)
 
         html = re.sub(r'<a\b[^>]*>(.*?)</a>', strip_blacklisted, html, flags=re.DOTALL)
 
-    if not MARK_EXTERNAL_LINKS:
+    if not mark_external_links:
         return html
 
     def mark_external(match: re.Match) -> str:

@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "django-markdownfield"
-version = "0.15.1"
+version = "0.16.0"
 description = "A simple custom field for Django that can safely render Markdown and store it in the database."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -40,6 +40,16 @@ packages = ["markdownfield"]
 
 [project.urls]
 Homepage = "https://github.com/dmptrluke/django-markdownfield"
+
+[dependency-groups]
+test = [
+    "pytest",
+    "pytest-django",
+]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "markdownfield.tests.settings"
+python_files = ["test_*.py"]
 
 [tool.ruff]
 target-version = "py310"

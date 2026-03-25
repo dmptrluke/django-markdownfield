@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.15.0 (2026-03-25)
+
+### Added
+
+- Extracted rendering pipeline into `render_markdown()` for standalone use without the dual-column pattern.
+- Added `render_markdown` template filter via `{% load markdownfield %}`. ([#19](https://github.com/dmptrluke/django-markdownfield/issues/19))
+- Added server-side preview endpoint and admin widget preview button. ([#10](https://github.com/dmptrluke/django-markdownfield/issues/10))
+- Added `rerender_markdown` management command for bulk re-rendering all stored markdown.
+- Added Django system checks for mismatched `rendered_field` references (W001) and missing URL configuration (W002).
+- Added validator self-registration via `VALIDATORS` dict for name-based lookup.
+- Added automatic `mark_safe()` on `RenderedMarkdownField` values loaded from the database.
+
+### Fixed
+
+- Fixed editor preview pane unreadable in Django admin dark mode - replaced hardcoded colors with admin CSS variables.
+- Fixed heading spacing in editor preview - more space above, less below.
+
 ## 0.14.0 (2026-03-25)
 
 ### Changed

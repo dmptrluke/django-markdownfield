@@ -28,6 +28,15 @@ INSTALLED_APPS = [
 ]
 ```
 
+To enable the admin preview endpoint, add the URL configuration:
+
+```python
+urlpatterns = [
+    path('markdownfield/', include('markdownfield.urls')),
+    ...
+]
+```
+
 ## Usage
 
 Add a `MarkdownField` and a paired `RenderedMarkdownField` to your model:
@@ -43,12 +52,35 @@ class Page(models.Model):
     text_rendered = RenderedMarkdownField()
 ```
 
+Whenever your model is saved, the `RenderedMarkdownField` will be updated automatically.
+
 ## Displaying content
 
-To display rendered Markdown in a template, use the `RenderedMarkdownField` and mark it safe:
+To display the rendered markdown in your template, just display the `RenderedMarkdownField` like any other field.
+```jinja
+{{ post.text_rendered }}
+```
+
+### Using the template filter
+
+If you don't want to use a `RenderedMarkdownField`, use the template filter to render Markdown in your templates directly:
 
 ```jinja
-{{ post.text_rendered | safe }}
+{% load markdownfield %}
+
+{{ post.raw_text|render_markdown }}
+{{ post.raw_text|render_markdown:"classy" }}
+```
+
+The argument is a validator name (`standard`, `classy`, `basic`, `null`). Defaults to `standard`.
+
+### Using render_markdown() directly
+
+```python
+from markdownfield.rendering import render_markdown
+from markdownfield.validators import VALIDATOR_STANDARD
+
+html = render_markdown('**bold**', VALIDATOR_STANDARD)
 ```
 
 ## Editor
@@ -200,6 +232,17 @@ VALIDATOR_STRICT = Validator(
     allowed_attrs=MARKDOWN_ATTRS,
     url_schemes={'http', 'https', 'mailto'},
 )
+```
+
+## Management commands
+
+### rerender_markdown
+
+Re-renders all `MarkdownField` values into their paired `RenderedMarkdownField`s. Useful after changing validators, markdown extensions, or upgrading django-markdownfield.
+
+```console
+python manage.py rerender_markdown
+python manage.py rerender_markdown --dry-run
 ```
 
 ## Migrations

@@ -1,0 +1,73 @@
+{% include 'django/forms/widgets/textarea.html' %}
+{{ options | json_script:options_id }}
+{% if csp_nonce %}<script nonce="{{ csp_nonce }}" type="text/javascript">
+{% elif request.csp_nonce %}<script nonce="{{ request.csp_nonce }}" type="text/javascript">
+{% else %}<script type="text/javascript">{% endif %}
+(function() {
+    const options = JSON.parse(document.getElementById('{{ options_id }}').textContent);
+    const editorOptions = Object.assign({
+        element: document.getElementById('{{ widget.attrs.id }}'),
+        autoDownloadFontAwesome: false,
+        hideIcons: ['side-by-side'],
+        showIcons: ['preview'],
+        spellChecker: false,
+        parsingConfig: {
+            allowAtxHeaderWithoutSpace: true,
+        },
+    }, options);
+    {% if preview_url %}
+    const previewUrl = '{{ preview_url }}';
+    const validatorName = '{{ validator_name }}';
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    let debounceTimer = null;
+
+    editorOptions.previewRender = function(plainText, preview) {
+        preview.innerHTML = 'Loading preview\u2026';
+
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(function() {
+            const body = new URLSearchParams();
+            body.append('text', plainText);
+            body.append('validator', validatorName);
+
+            fetch(previewUrl, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken'),
+                },
+                body: body,
+            })
+            .then(function(response) { return response.json(); })
+            .then(function(data) {
+                if (data.html !== undefined) {
+                    preview.innerHTML = data.html;
+                } else {
+                    preview.innerHTML = '<p>' + (data.error || 'Preview failed') + '</p>';
+                }
+            })
+            .catch(function() {
+                preview.textContent = plainText;
+            });
+        }, 300);
+
+        return 'Loading preview\u2026';
+    };
+    {% endif %}
+    new EasyMDE(editorOptions);
+})();
+</script>

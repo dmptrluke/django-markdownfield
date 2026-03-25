@@ -44,49 +44,50 @@
 .editor-preview {
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
-    font-size: 100%;
+    background: var(--body-bg);
+    color: var(--body-fg);
     font-size: 1em;
-    line-height: 1.5em
+    line-height: 1.5em;
 }
 
 .editor-preview * {
-    line-height: 1.5
+    line-height: 1.5;
 }
 
 .editor-preview a {
-    color: #5b80b2;
-    text-decoration: underline
+    color: var(--link-fg);
+    text-decoration: underline;
 }
 
 .editor-preview a:visited {
-    color: #0b0080
+    color: var(--link-selected-fg);
 }
 
 .editor-preview a:hover {
-    color: #0645ad
+    color: var(--link-hover-color);
 }
 
 .editor-preview a:active {
-    color: #faa700
+    color: var(--link-hover-color);
 }
 
 .editor-preview a:focus {
-    outline: thin dotted
+    outline: thin dotted;
 }
 
 .editor-preview a:active,
 .editor-preview a:hover {
-    outline: 0
+    outline: 0;
 }
 
 .editor-preview p {
     margin: 1em 0;
     padding: 0;
-    font-size: 14px
+    font-size: 14px;
 }
 
 .editor-preview img {
-    max-width: 100%
+    max-width: 100%;
 }
 
 .editor-preview h1,
@@ -96,48 +97,52 @@
 .editor-preview h5,
 .editor-preview h6 {
     font-weight: 400;
-    color: #111;
-    margin-top: .75em;
-    margin-bottom: .75em;
+    color: var(--body-fg);
+    margin-top: 1em;
+    margin-bottom: .5em;
     padding: 0;
-    background: 0 0
+    background: 0 0;
+}
+
+.editor-preview > :first-child {
+    margin-top: 0;
 }
 
 .editor-preview h4,
 .editor-preview h5,
 .editor-preview h6 {
-    font-weight: 700
+    font-weight: 700;
 }
 
 .editor-preview h1 {
-    font-size: 2.5em
+    font-size: 2.5em;
 }
 
 .editor-preview h2 {
-    font-size: 2em
+    font-size: 2em;
 }
 
 .editor-preview h3 {
-    font-size: 1.5em
+    font-size: 1.5em;
 }
 
 .editor-preview h4 {
-    font-size: 1.2em
+    font-size: 1.2em;
 }
 
 .editor-preview h5 {
-    font-size: 1em
+    font-size: 1em;
 }
 
 .editor-preview h6 {
-    font-size: .9em
+    font-size: .9em;
 }
 
 .editor-preview blockquote {
-    color: #666;
+    color: var(--body-quiet-color);
     margin: 0;
     padding-left: 1.5em;
-    border-left: .5em #eee solid
+    border-left: .5em var(--hairline-color) solid;
 }
 
 .editor-preview hr {
@@ -145,9 +150,9 @@
     height: 0;
     border: 0;
     font-style: italic;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid var(--border-color);
     margin: 20px 0;
-    padding: 0
+    padding: 0;
 }
 
 .editor-preview code,
@@ -155,17 +160,17 @@
 .editor-preview pre,
 .editor-preview samp {
     font-family: monospace, monospace;
-    font-size: 14px
+    font-size: 14px;
 }
 
 .editor-preview code,
 .editor-preview pre {
     margin: 0 2px;
     padding: 0 5px;
-    border: 1px solid #ddd;
-    background-color: #f8f8f8;
+    border: 1px solid var(--border-color);
+    background-color: var(--darkened-bg);
     border-radius: 2px;
-    color: #444
+    color: var(--body-medium-color);
 }
 
 .editor-preview pre {
@@ -173,36 +178,36 @@
     padding: 1em;
     white-space: pre;
     white-space: pre-wrap;
-    word-wrap: break-word
+    word-wrap: break-word;
 }
 
 .editor-preview pre code {
     margin: 0;
     padding: 0;
     background: 0 0;
-    border: none
+    border: none;
 }
 
 .editor-preview b,
 .editor-preview strong {
-    font-weight: 700
+    font-weight: 700;
 }
 
 .editor-preview dfn {
-    font-style: italic
+    font-style: italic;
 }
 
 .editor-preview ins {
     background: #ff9;
     color: #000;
-    text-decoration: none
+    text-decoration: none;
 }
 
 .editor-preview mark {
     background: #ff0;
     color: #000;
     font-style: italic;
-    font-weight: 700
+    font-weight: 700;
 }
 
 .editor-preview sub,
@@ -210,56 +215,54 @@
     font-size: 75%;
     line-height: 0;
     position: relative;
-    vertical-align: baseline
+    vertical-align: baseline;
 }
 
 .editor-preview sup {
-    top: -.5em
+    top: -.5em;
 }
 
 .editor-preview sub {
-    bottom: -.25em
+    bottom: -.25em;
 }
 
 .editor-preview ol,
 .editor-preview ul {
     list-style: unset;
     margin: 1em 0 !important;
-    padding: 0 0 0 2em !important
+    padding: 0 0 0 2em !important;
 }
 
 .editor-preview ol li,
 .editor-preview ul li {
     font-size: 14px !important;
-    margin-bottom: .1em
+    margin-bottom: .1em;
 }
 
 .editor-preview li p:last-child {
-    margin: 0
+    margin: 0;
 }
 
 .editor-preview dd {
-    margin: 0 0 0 2em
+    margin: 0 0 0 2em;
 }
 
 .editor-preview img {
     border: 0;
-    -ms-interpolation-mode: bicubic;
-    vertical-align: middle
+    vertical-align: middle;
 }
 
 .editor-preview table {
     border-collapse: collapse;
-    border-spacing: 0
+    border-spacing: 0;
 }
 
 .editor-preview th {
-    background: 0 0;
-    background: #f8f8f8;
-    font-size: 14px
+    background: var(--darkened-bg);
+    font-size: 14px;
 }
 
 .editor-preview td {
     vertical-align: top;
-    font-size: 14px
+    font-size: 14px;
 }

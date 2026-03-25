@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.15.1 (2026-03-25)
+
+### Fixed
+
+- Fix build issue.
+
 ## 0.15.0 (2026-03-25)
 
 ### Added

@@ -1,4 +1,5 @@
 from django.forms import widgets
+from django.urls.exceptions import NoReverseMatch
 
 import shortuuid
 
@@ -55,7 +56,7 @@ class MDEAdminWidget(MDEWidget):
                 from django.urls import reverse
 
                 preview_url = reverse('markdownfield:preview')
-            except Exception:
+            except NoReverseMatch:
                 preview_url = None
 
         context['validator_name'] = self.validator_name

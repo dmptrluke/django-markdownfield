@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "django-markdownfield"
-dynamic = ["version"]
+version = "0.15.1"
 description = "A simple custom field for Django that can safely render Markdown and store it in the database."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -34,9 +34,6 @@ dependencies = [
     "shortuuid",
 ]
 
-[tool.hatch.version]
-path = "markdownfield/__init__.py"
-
 [tool.hatch.build.targets.wheel]
 packages = ["markdownfield"]
 
@@ -64,12 +61,36 @@ select = [
     "SIM",       # flake8-simplify
     "RUF",       # ruff-specific
     "PIE",       # flake8-pie
+    "S",         # bandit/security
+    "T20",       # flake8-print
+    "T10",       # flake8-debugger
+    "BLE",       # flake8-blind-except
+    "LOG",       # flake8-logging
+    "ISC",       # flake8-implicit-str-concat
+    "FLY",       # flynt
+    "FURB",      # refurb
+    "RET",       # flake8-return
+    "N",         # pep8-naming
+    "PGH",       # pygrep-hooks
+    "RSE",       # flake8-raise
+    "C90",       # mccabe
+
 ]
 ignore = [
     "RUF012",  # mutable class attrs (false positive for Django)
     "SIM103",  # return condition directly
     "SIM108",  # ternary operator
+    "RET504",  # unnecessary assignment before return
+    "RET505",  # unnecessary else after return
 ]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 15
+
+[tool.ruff.lint.per-file-ignores]
+"**/tests/**" = ["S"]
+"**/conftest.py" = ["S"]
+"**/templatetags/**" = ["S308"]
 
 [tool.ruff.format]
 quote-style = "single"

@@ -24,7 +24,7 @@ class RenderedMarkdownField(TextField):
     def from_db_value(self, value, expression, connection):
         if value is None:
             return value
-        return mark_safe(value)
+        return mark_safe(value)  # noqa: S308
 
     def deconstruct(self):
         name, path, args, kwargs = super().deconstruct()

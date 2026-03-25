@@ -1,5 +1,7 @@
 from django.apps import AppConfig
 from django.core import checks
+from django.core.exceptions import FieldDoesNotExist
+from django.urls.exceptions import NoReverseMatch
 
 
 class MarkdownFieldConfig(AppConfig):
@@ -23,7 +25,7 @@ def check_rendered_fields(app_configs, **kwargs):
             if isinstance(field, MarkdownField) and field.rendered_field:
                 try:
                     model._meta.get_field(field.rendered_field)
-                except Exception:
+                except FieldDoesNotExist:
                     errors.append(
                         checks.Warning(
                             f'{model.__name__}.{field.name} references rendered_field '
@@ -39,7 +41,7 @@ def check_preview_urls(app_configs, **kwargs):
         from django.urls import reverse
 
         reverse('markdownfield:preview')
-    except Exception:
+    except NoReverseMatch:
         return [
             checks.Warning(
                 'markdownfield URLs are not included in your urlconf. '

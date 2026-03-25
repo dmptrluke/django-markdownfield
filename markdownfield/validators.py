@@ -1,5 +1,7 @@
 from dataclasses import dataclass
 
+VALIDATORS = {}
+
 MARKDOWN_TAGS = {
     'h1',
     'h2',
@@ -52,6 +54,10 @@ class Validator:
     generic_attribute_prefixes: set[str] | None = None
     url_schemes: set[str] | None = None
     sanitize: bool = True
+    name: str = 'custom'
+
+    def __post_init__(self):
+        VALIDATORS[self.name] = self
 
 
 VALIDATOR_BASIC = Validator(
@@ -59,13 +65,15 @@ VALIDATOR_BASIC = Validator(
     allowed_attrs={
         'a': {'href', 'alt', 'title'},
     },
+    name='basic',
 )
 
-VALIDATOR_NULL = Validator(allowed_tags=set(), allowed_attrs={}, sanitize=False)
+VALIDATOR_NULL = Validator(allowed_tags=set(), allowed_attrs={}, sanitize=False, name='null')
 
 VALIDATOR_STANDARD = Validator(
     allowed_tags=MARKDOWN_TAGS,
     allowed_attrs=MARKDOWN_ATTRS,
+    name='standard',
 )
 
 VALIDATOR_CLASSY = Validator(
@@ -76,4 +84,5 @@ VALIDATOR_CLASSY = Validator(
         'a': {'href', 'alt', 'title', 'name', 'class'},
     },
     generic_attribute_prefixes={'data-'},
+    name='classy',
 )

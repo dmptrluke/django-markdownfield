@@ -1,17 +1,11 @@
-from django.conf import settings
 from django.contrib.admin import widgets as admin_widgets
 from django.db.models import TextField
-
-import nh3
-from markdown import markdown
+from django.utils.safestring import mark_safe
 
 from .forms import MarkdownFormField
-from .util import process_links
+from .rendering import render_markdown
 from .validators import VALIDATOR_STANDARD, Validator
 from .widgets import MDEAdminWidget
-
-EXTENSIONS = getattr(settings, 'MARKDOWN_EXTENSIONS', ['fenced_code'])
-EXTENSION_CONFIGS = getattr(settings, 'MARKDOWN_EXTENSION_CONFIGS', {})
 
 
 class RenderedMarkdownField(TextField):
@@ -26,6 +20,11 @@ class RenderedMarkdownField(TextField):
         kwargs['editable'] = False
         kwargs['blank'] = False
         super().__init__(*args, **kwargs)
+
+    def from_db_value(self, value, expression, connection):
+        if value is None:
+            return value
+        return mark_safe(value)
 
     def deconstruct(self):
         name, path, args, kwargs = super().deconstruct()
@@ -68,7 +67,7 @@ class MarkdownField(TextField):
         defaults.update(kwargs)
 
         if self.use_admin_editor and 'widget' in defaults and defaults['widget'] == admin_widgets.AdminTextareaWidget:
-            defaults['widget'] = MDEAdminWidget()
+            defaults['widget'] = MDEAdminWidget(validator_name=self.validator.name)
 
         return super().formfield(**defaults)
 
@@ -78,23 +77,5 @@ class MarkdownField(TextField):
         if not self.rendered_field:
             return value
 
-        dirty = markdown(text=value, extensions=EXTENSIONS, extension_configs=EXTENSION_CONFIGS)
-
-        if self.validator.sanitize:
-            clean = nh3.clean(
-                dirty,
-                tags=self.validator.allowed_tags,
-                attributes=self.validator.allowed_attrs,
-                clean_content_tags={'script', 'style'},
-                link_rel='nofollow noopener noreferrer',
-                filter_style_properties=self.validator.filter_style_properties,
-                generic_attribute_prefixes=self.validator.generic_attribute_prefixes,
-                url_schemes=self.validator.url_schemes,
-            )
-            clean = process_links(clean)
-        else:
-            # danger!
-            clean = dirty
-
-        setattr(model_instance, self.rendered_field, clean)
+        setattr(model_instance, self.rendered_field, render_markdown(value, self.validator))
         return value

@@ -1,4 +1,3 @@
-from django.contrib.admin import widgets as admin_widgets
 from django.db.models import TextField
 from django.utils.safestring import mark_safe
 
@@ -66,7 +65,7 @@ class MarkdownField(TextField):
 
         defaults.update(kwargs)
 
-        if self.use_admin_editor and 'widget' in defaults and defaults['widget'] == admin_widgets.AdminTextareaWidget:
+        if self.use_admin_editor:
             defaults['widget'] = MDEAdminWidget(validator_name=self.validator.name)
 
         return super().formfield(**defaults)

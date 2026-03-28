@@ -20,19 +20,19 @@ class TestMarkdownFormField:
         form_field = field.formfield()
         assert isinstance(form_field.widget, MDEWidget)
 
-    # use_editor=False gives standard Textarea
+    # use_editor=False with use_admin_editor=False gives standard Textarea
     def test_use_editor_false_skips_widget(self):
-        field = MarkdownField(rendered_field=None, use_editor=False)
+        field = MarkdownField(rendered_field=None, use_editor=False, use_admin_editor=False)
         form_field = field.formfield()
         assert isinstance(form_field.widget, Textarea)
         assert not isinstance(form_field.widget, MDEWidget)
 
 
 class TestAdminWidget:
-    # formfield() swaps AdminTextareaWidget for MDEAdminWidget
+    # formfield() always uses MDEAdminWidget when use_admin_editor=True
     def test_admin_widget_replaces_textarea(self):
         field = MarkdownField(rendered_field=None)
-        form_field = field.formfield(widget=AdminTextareaWidget)
+        form_field = field.formfield()
         assert isinstance(form_field.widget, MDEAdminWidget)
 
     # use_admin_editor=False keeps AdminTextareaWidget

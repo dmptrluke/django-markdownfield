@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.17.0 (2026-03-28)
+
+### Added
+
+- Added dark mode support for unfold-admin and other Tailwind-based admin themes using the `.dark` class convention. Editor, toolbar, preview, and all sub-elements themed using unfold's OKLCH palette tokens.
+
+### Changed
+
+- Editor widget CSS variables now chain through unfold's `--color-base-*` / `--color-font-*` / `--color-primary-*` tokens before falling back to hardcoded values. Stock Django admin is unaffected (its variables resolve first).
+- Removed top border on CodeMirror editor to sit flush against the toolbar.
+
 ## 0.16.0 (2026-03-26)
 
 ### Added

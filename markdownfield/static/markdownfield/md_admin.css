@@ -4,13 +4,13 @@
 }
 
 .EasyMDEContainer .editor-toolbar {
-    background-color: var(--header-bg);
+    background-color: var(--header-bg, var(--color-base-100, #f3f4f6));
     border: none;
 }
 
 .EasyMDEContainer .editor-toolbar button {
-    color: var(--button-fg);
-    background-color: var(--header-bg);
+    color: var(--button-fg, var(--color-base-600, inherit));
+    background-color: var(--header-bg, var(--color-base-100, #f3f4f6));
     border: none;
     box-shadow: none;
 }
@@ -18,18 +18,19 @@
 .EasyMDEContainer .editor-toolbar button:hover,
 .EasyMDEContainer .editor-toolbar button.active {
     border: none;
-    background-color: var(--button-hover-bg);
+    background-color: var(--button-hover-bg, var(--color-base-300, #d1d5db));
     box-shadow: none;
 }
 
 .EasyMDEContainer .CodeMirror {
-    color: var(--body-fg);
-    background-color: var(--body-bg);
-    border: 1px solid var(--border-color) !important;
+    color: var(--body-fg, var(--color-font-important-light, inherit));
+    background-color: var(--body-bg, white);
+    border: 1px solid var(--border-color, var(--color-base-200, #e5e7eb)) !important;
+    border-top: none !important;
 }
 
 .EasyMDEContainer .CodeMirror-cursor {
-    border-left: 1px solid var(--body-fg) !important;
+    border-left: 1px solid var(--body-fg, var(--color-font-default-light, currentColor)) !important;
 }
 
 .EasyMDEContainer .CodeMirror-selected,
@@ -38,14 +39,14 @@
 }
 
 .EasyMDEContainer .CodeMirror-activeline-background {
-    background: var(--selected-bg);
+    background: var(--selected-bg, var(--color-base-100, #f3f4f6));
 }
 
 .editor-preview {
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
-    background: var(--body-bg);
-    color: var(--body-fg);
+    background: var(--body-bg, white);
+    color: var(--body-fg, var(--color-font-default-light, inherit));
     font-size: 1em;
     line-height: 1.5em;
 }
@@ -55,20 +56,20 @@
 }
 
 .editor-preview a {
-    color: var(--link-fg);
+    color: var(--link-fg, var(--color-primary-600, #417690));
     text-decoration: underline;
 }
 
 .editor-preview a:visited {
-    color: var(--link-selected-fg);
+    color: var(--link-selected-fg, var(--color-primary-700, #306080));
 }
 
 .editor-preview a:hover {
-    color: var(--link-hover-color);
+    color: var(--link-hover-color, var(--color-primary-500, #609ab6));
 }
 
 .editor-preview a:active {
-    color: var(--link-hover-color);
+    color: var(--link-hover-color, var(--color-primary-500, #609ab6));
 }
 
 .editor-preview a:focus {
@@ -97,7 +98,7 @@
 .editor-preview h5,
 .editor-preview h6 {
     font-weight: 400;
-    color: var(--body-fg);
+    color: var(--body-fg, var(--color-font-default-light, inherit));
     margin-top: 1em;
     margin-bottom: .5em;
     padding: 0;
@@ -139,10 +140,10 @@
 }
 
 .editor-preview blockquote {
-    color: var(--body-quiet-color);
+    color: var(--body-quiet-color, var(--color-base-400, #6b7280));
     margin: 0;
     padding-left: 1.5em;
-    border-left: .5em var(--hairline-color) solid;
+    border-left: .5em var(--hairline-color, var(--color-base-200, #e5e7eb)) solid;
 }
 
 .editor-preview hr {
@@ -150,7 +151,7 @@
     height: 0;
     border: 0;
     font-style: italic;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color, var(--color-base-200, #e5e7eb));
     margin: 20px 0;
     padding: 0;
 }
@@ -167,10 +168,10 @@
 .editor-preview pre {
     margin: 0 2px;
     padding: 0 5px;
-    border: 1px solid var(--border-color);
-    background-color: var(--darkened-bg);
+    border: 1px solid var(--border-color, var(--color-base-200, #e5e7eb));
+    background-color: var(--darkened-bg, var(--color-base-100, #f3f4f6));
     border-radius: 2px;
-    color: var(--body-medium-color);
+    color: var(--body-medium-color, var(--color-base-500, #6b7280));
 }
 
 .editor-preview pre {
@@ -258,11 +259,100 @@
 }
 
 .editor-preview th {
-    background: var(--darkened-bg);
+    background: var(--darkened-bg, var(--color-base-100, #f3f4f6));
     font-size: 14px;
 }
 
 .editor-preview td {
     vertical-align: top;
     font-size: 14px;
+}
+
+/* Dark mode for admin themes using .dark on <html> (unfold, etc.).
+   Uses unfold's OKLCH palette tokens with fallbacks for other dark admins. */
+
+.dark .EasyMDEContainer .CodeMirror {
+    background: var(--color-base-900, #1a1a2e);
+    color: var(--color-base-300, #d1d5db);
+    border: 1px solid var(--color-base-700, #374151) !important;
+    border-top: none !important;
+}
+
+.dark .EasyMDEContainer .editor-preview,
+.dark .EasyMDEContainer .editor-preview-side {
+    background: var(--color-base-900, #1a1a2e);
+    color: var(--color-base-300, #d1d5db);
+}
+
+.dark .EasyMDEContainer .CodeMirror-cursor {
+    border-left-color: var(--color-base-300, #d1d5db);
+}
+
+.dark .EasyMDEContainer .editor-toolbar {
+    background: var(--color-base-800, #1f2937);
+    border-color: var(--color-base-700, #374151);
+}
+
+.dark .EasyMDEContainer .editor-toolbar button {
+    color: var(--color-base-300, #d1d5db) !important;
+    background: var(--color-base-800, #1f2937);
+}
+
+.dark .EasyMDEContainer .editor-toolbar button:hover,
+.dark .EasyMDEContainer .editor-toolbar button.active {
+    background: var(--color-base-700, #374151);
+    border-color: var(--color-base-600, #4b5563);
+}
+
+.dark .EasyMDEContainer .editor-toolbar i.separator {
+    border-color: var(--color-base-700, #374151);
+}
+
+.dark .EasyMDEContainer .editor-statusbar {
+    color: var(--color-base-400, #9ca3af);
+}
+
+.dark .EasyMDEContainer .CodeMirror-activeline-background {
+    background: var(--color-base-800, #1f2937);
+}
+
+.dark .editor-preview h1,
+.dark .editor-preview h2,
+.dark .editor-preview h3,
+.dark .editor-preview h4,
+.dark .editor-preview h5,
+.dark .editor-preview h6 {
+    color: var(--color-base-300, #d1d5db);
+}
+
+.dark .editor-preview a {
+    color: var(--color-primary-400, #609ab6);
+}
+
+.dark .editor-preview blockquote {
+    color: var(--color-base-400, #9ca3af);
+    border-left-color: var(--color-base-700, #374151);
+}
+
+.dark .editor-preview code,
+.dark .editor-preview pre {
+    border-color: var(--color-base-700, #374151);
+    background-color: var(--color-base-800, #1f2937);
+    color: var(--color-base-400, #9ca3af);
+}
+
+.dark .editor-preview hr {
+    border-bottom-color: var(--color-base-700, #374151);
+}
+
+.dark .editor-preview th {
+    background: var(--color-base-800, #1f2937);
+}
+
+.dark .EasyMDEContainer .CodeMirror-selected {
+    background: var(--color-base-700, #374151);
+}
+
+.dark .EasyMDEContainer .CodeMirror-focused .CodeMirror-selected {
+    background: var(--color-base-600, #4b5563);
 }

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.17.1 (2026-03-29)
+
+### Fixed
+
+- Fixed `MDEAdminWidget` being used for all forms instead of only admin views. Non-admin forms now correctly get the plain `MDEWidget`.
+
 ## 0.17.0 (2026-03-28)
 
 ### Added

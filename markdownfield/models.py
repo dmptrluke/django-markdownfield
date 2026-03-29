@@ -63,9 +63,16 @@ class MarkdownField(TextField):
         if self.use_editor:
             defaults = {'form_class': MarkdownFormField, 'widget': MDEWidget}
 
+        # detect admin context: ModelAdmin.formfield_for_dbfield passes
+        # AdminTextareaWidget for TextFields
+        from django.contrib.admin.widgets import AdminTextareaWidget
+
+        widget_kwarg = kwargs.get('widget')
+        is_admin = isinstance(widget_kwarg, type) and issubclass(widget_kwarg, AdminTextareaWidget)
+
         defaults.update(kwargs)
 
-        if self.use_admin_editor:
+        if is_admin and self.use_admin_editor:
             defaults['widget'] = MDEAdminWidget(validator_name=self.validator.name)
 
         return super().formfield(**defaults)

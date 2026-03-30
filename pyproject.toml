@@ -4,14 +4,15 @@ build-backend = "hatchling.build"
 
 [project]
 name = "django-markdownfield"
-version = "0.17.1"
+version = "0.17.2"
 description = "A simple custom field for Django that can safely render Markdown and store it in the database."
 readme = "README.md"
 requires-python = ">=3.10"
-license = {text = "MIT"}
+license = "MIT"
 authors = [
     {name = "Luke Rogers", email = "luke@dmptr.com"},
 ]
+keywords = ["django", "markdown", "field", "editor", "sanitizer"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
@@ -25,7 +26,6 @@ classifiers = [
     "Framework :: Django :: 5.2",
     "Framework :: Django :: 6.0",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
 dependencies = [
@@ -40,6 +40,8 @@ packages = ["markdownfield"]
 
 [project.urls]
 Homepage = "https://github.com/dmptrluke/django-markdownfield"
+Issues = "https://github.com/dmptrluke/django-markdownfield/issues"
+Changelog = "https://github.com/dmptrluke/django-markdownfield/blob/master/CHANGELOG.md"
 
 [dependency-groups]
 test = [

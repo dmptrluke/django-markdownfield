@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.17.3 (2026-03-31)
+
+- Bump pygments dependency (security update)
+
 ## 0.17.2 (2026-03-31)
 
 - Improve PyPI metadata: add project URLs (Issues, Changelog), keywords, and SPDX license format

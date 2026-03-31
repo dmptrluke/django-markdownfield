@@ -10,37 +10,19 @@ permissions:
 
 jobs:
   lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-      - uses: astral-sh/setup-uv@37802adc94f370d6bfd71619e3f0bf239e1f3b78 # v7.6.0
-      - run: uvx ruff check .
-      - run: uvx ruff format --check .
+    uses: dmptrluke/workflows/.github/workflows/django-lint.yml@main
 
   test:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - python: '3.10'
-            django: '4.2'
-          - python: '3.12'
-            django: '4.2'
-          - python: '3.12'
-            django: '5.2'
-          - python: '3.13'
-            django: '5.2'
-          - python: '3.14'
-            django: '5.2'
-          - python: '3.12'
-            django: '6.0'
-          - python: '3.13'
-            django: '6.0'
-          - python: '3.14'
-            django: '6.0'
-    name: test (py${{ matrix.python }}-dj${{ matrix.django }})
-    steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-      - uses: astral-sh/setup-uv@37802adc94f370d6bfd71619e3f0bf239e1f3b78 # v7.6.0
-      - run: uv run --python ${{ matrix.python }} --with "django~=${{ matrix.django }}.0" --group test python -m pytest
+    uses: dmptrluke/workflows/.github/workflows/django-test.yml@main
+    with:
+      matrix: >-
+        [
+          {"python": "3.10", "django": "4.2"},
+          {"python": "3.12", "django": "4.2"},
+          {"python": "3.12", "django": "5.2"},
+          {"python": "3.13", "django": "5.2"},
+          {"python": "3.14", "django": "5.2"},
+          {"python": "3.12", "django": "6.0"},
+          {"python": "3.13", "django": "6.0"},
+          {"python": "3.14", "django": "6.0"}
+        ]

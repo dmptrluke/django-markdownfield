@@ -61,7 +61,10 @@ class MarkdownField(TextField):
     def formfield(self, **kwargs):
         defaults = {}
         if self.use_editor:
-            defaults = {'form_class': MarkdownFormField, 'widget': MDEWidget}
+            defaults = {
+                'form_class': MarkdownFormField,
+                'widget': MDEWidget(validator_name=self.validator.name),
+            }
 
         # detect admin context: ModelAdmin.formfield_for_dbfield passes
         # AdminTextareaWidget for TextFields

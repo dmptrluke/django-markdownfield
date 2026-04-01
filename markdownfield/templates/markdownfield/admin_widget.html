@@ -1,15 +1,16 @@
 {% include 'django/forms/widgets/textarea.html' %}
 {{ options | json_script:options_id }}
+{{ toolbar | json_script:toolbar_id }}
 {% if csp_nonce %}<script nonce="{{ csp_nonce }}" type="text/javascript">
 {% elif request.csp_nonce %}<script nonce="{{ request.csp_nonce }}" type="text/javascript">
 {% else %}<script type="text/javascript">{% endif %}
 (function() {
     const options = JSON.parse(document.getElementById('{{ options_id }}').textContent);
+    const toolbar = JSON.parse(document.getElementById('{{ toolbar_id }}').textContent);
     const editorOptions = Object.assign({
         element: document.getElementById('{{ widget.attrs.id }}'),
         autoDownloadFontAwesome: false,
-        hideIcons: ['side-by-side'],
-        showIcons: ['preview'],
+        toolbar: toolbar,
         spellChecker: false,
         parsingConfig: {
             allowAtxHeaderWithoutSpace: true,

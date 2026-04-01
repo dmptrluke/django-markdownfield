@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 VALIDATORS = {}
 
@@ -43,6 +43,24 @@ MARKDOWN_ATTRS = {
     'abbr': {'title'},
 }
 
+TOOLBAR_FULL = [
+    'bold',
+    'italic',
+    'code',
+    '|',
+    'heading-1',
+    'heading-2',
+    'heading-3',
+    '|',
+    'quote',
+    'unordered-list',
+    'ordered-list',
+    '|',
+    'link',
+    'image',
+    'horizontal-rule',
+]
+
 
 @dataclass
 class Validator:
@@ -55,6 +73,7 @@ class Validator:
     url_schemes: set[str] | None = None
     sanitize: bool = True
     name: str = 'custom'
+    toolbar: list[str] = field(default_factory=lambda: list(TOOLBAR_FULL))
 
     def __post_init__(self):
         VALIDATORS[self.name] = self
@@ -65,6 +84,13 @@ VALIDATOR_BASIC = Validator(
     allowed_attrs={
         'a': {'href', 'alt', 'title'},
     },
+    toolbar=[
+        'bold',
+        'italic',
+        'code',
+        '|',
+        'link',
+    ],
     name='basic',
 )
 

@@ -14,41 +14,43 @@ class MDEWidget(widgets.Textarea):
         super().__init__(**kwargs)
         self.uuid = shortuuid.uuid()
         self.validator_name = validator_name
-
-        if options is None:
-            options = {}
-
-        self.options = options
-        self.options_id = 'options_' + self.uuid
+        self.options = options if options is not None else {}
+        self.config_id = 'mdf_cfg_' + self.uuid
 
     def get_context(self, *args):
         context = super().get_context(*args)
-        content = VALIDATORS[self.validator_name].toolbar
+        toolbar = VALIDATORS[self.validator_name].toolbar
+        context['widget']['attrs']['data-markdownfield'] = self.config_id
         context.update(
             {
-                'options': self.options,
-                'options_id': self.options_id,
-                'toolbar': [*content, '|', *self._utility_buttons],
-                'toolbar_id': 'toolbar_' + self.uuid,
+                'config': {
+                    'toolbar': [*toolbar, '|', *self._utility_buttons],
+                    'options': self.options,
+                },
+                'config_id': self.config_id,
             }
         )
         return context
 
     class Media:
-        js = ('markdownfield/easymde/easymde.min.js',)
+        js = (
+            'markdownfield/easymde/easymde.min.js',
+            'markdownfield/markdownfield.js',
+            'markdownfield/mte/mte-kernel.min.js',
+            'markdownfield/mte/mte-plugin.js',
+        )
 
         css = {
             'all': (
                 'markdownfield/easymde/easymde.min.css',
-                'markdownfield/fontawesome/font-awesome.min.css',
                 'markdownfield/md.css',
+                'markdownfield/md_frontend.css',
             )
         }
 
 
 class MDEAdminWidget(MDEWidget):
-    template_name = 'markdownfield/admin_widget.html'
-    _utility_buttons = ['preview', 'fullscreen', '|', 'guide']
+    _utility_buttons = ['fullscreen', '|', 'guide']
 
     def __init__(self, options=None, validator_name='standard', preview_url=None, **kwargs):
         super().__init__(options=options, validator_name=validator_name, **kwargs)
@@ -66,17 +68,26 @@ class MDEAdminWidget(MDEWidget):
             except NoReverseMatch:
                 preview_url = None
 
-        context['validator_name'] = self.validator_name
-        context['preview_url'] = preview_url
+        if preview_url:
+            context['config']['preview'] = {
+                'url': preview_url,
+                'validator': self.validator_name,
+            }
+
         return context
 
     class Media:
         extend = False
-        js = ('markdownfield/easymde/easymde.min.js',)
+        js = (
+            'markdownfield/easymde/easymde.min.js',
+            'markdownfield/markdownfield.js',
+            'markdownfield/mte/mte-kernel.min.js',
+            'markdownfield/mte/mte-plugin.js',
+        )
         css = {
             'all': (
                 'markdownfield/easymde/easymde.min.css',
-                'markdownfield/fontawesome/font-awesome.min.css',
+                'markdownfield/md.css',
                 'markdownfield/md_admin.css',
             )
         }

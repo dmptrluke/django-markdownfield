@@ -55,6 +55,26 @@ class TestAdminWidget:
         form_field = field.formfield(widget=AdminTextareaWidget)
         assert form_field.widget.validator_name == 'basic'
 
+    # admin config includes preview when URL is provided
+    def test_admin_widget_config_has_preview(self):
+        w = MDEAdminWidget(preview_url='/preview/')
+        ctx = w.get_context('body', '', {'id': 'id_body'})
+        assert 'preview' in ctx['config']
+        assert ctx['config']['preview']['url'] == '/preview/'
+        assert ctx['config']['preview']['validator'] == 'standard'
+
+    # admin config resolves preview URL from urlconf when not explicit
+    def test_admin_widget_config_resolves_preview_url(self):
+        w = MDEAdminWidget()
+        ctx = w.get_context('body', '', {'id': 'id_body'})
+        assert 'preview' in ctx['config']
+        assert ctx['config']['preview']['url'] == '/markdownfield/preview/'
+
+    # both widgets use the same template
+    def test_both_widgets_use_same_template(self):
+        assert MDEWidget.template_name == 'markdownfield/widget.html'
+        assert MDEAdminWidget.template_name == 'markdownfield/widget.html'
+
 
 class TestMDEWidget:
     # two widget instances have different UUIDs
@@ -63,10 +83,41 @@ class TestMDEWidget:
         w2 = MDEWidget()
         assert w1.uuid != w2.uuid
 
-    # widget media includes EasyMDE JS and CSS
-    def test_widget_media_includes_easymde(self):
+    # widget media includes all JS files
+    def test_widget_media_includes_js(self):
         w = MDEWidget()
         media_js = str(w.media['js'])
-        media_css = str(w.media['css'])
         assert 'easymde.min.js' in media_js
+        assert 'markdownfield.js' in media_js
+        assert 'mte-kernel.min.js' in media_js
+        assert 'mte-plugin.js' in media_js
+
+    # widget media includes all CSS files
+    def test_widget_media_includes_css(self):
+        w = MDEWidget()
+        media_css = str(w.media['css'])
         assert 'easymde.min.css' in media_css
+        assert 'md.css' in media_css
+
+    # textarea gets data-markdownfield attribute pointing at config
+    def test_widget_renders_data_attribute(self):
+        w = MDEWidget()
+        ctx = w.get_context('body', '', {'id': 'id_body'})
+        assert 'data-markdownfield' in ctx['widget']['attrs']
+        assert ctx['widget']['attrs']['data-markdownfield'] == w.config_id
+
+    # config has toolbar and options but no preview
+    def test_widget_config_shape(self):
+        w = MDEWidget()
+        ctx = w.get_context('body', '', {'id': 'id_body'})
+        config = ctx['config']
+        assert 'toolbar' in config
+        assert 'options' in config
+        assert 'preview' not in config
+
+    # config toolbar reflects validator (basic excludes table)
+    def test_widget_config_toolbar_from_validator(self):
+        w = MDEWidget(validator_name='basic')
+        ctx = w.get_context('body', '', {'id': 'id_body'})
+        assert 'bold' in ctx['config']['toolbar']
+        assert 'table' not in ctx['config']['toolbar']

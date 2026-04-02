@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.19.0
+
+### Changed
+
+- Consolidated widget JS into a single `markdownfield.js` with no inline scripts. Editors auto-initialize via data attributes.
+- Switched to a [custom EasyMDE build](https://github.com/dmptrluke/easymde-markdownfield) with marked, spell checker, and FA CDN downloads stripped out (-60KB).
+- Font Awesome replaced with a 19-icon woff2 subset (2.7KB, down from 1MB).
+- Static assets reduced from 1.38MB to 342KB.
+
+### Added
+
+- Table editing via [mte-kernel](https://github.com/susisu/mte-kernel): Tab/Shift-Tab to navigate cells, Enter for next row, Ctrl-Shift-F to format.
+- Improved editor syntax styling: monospace code blocks and tables, dimmed list markers and table cell content.
+- Third-party license files for bundled dependencies (EasyMDE, mte-kernel, Font Awesome).
+- Support for optional CodeMirror language syntax highlighting in fenced code blocks (modes not shipped, but `window.CodeMirror` is exposed
+  for users who want to add them).
+
 ## 0.18.4
 
 ### Fixed

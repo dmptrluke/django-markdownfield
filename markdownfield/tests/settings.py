@@ -33,6 +33,6 @@ TEMPLATES = [
     },
 ]
 
-SITE_URL = 'https://example.com'
+MARKDOWNFIELD_INTERNAL_URL = 'https://example.com'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

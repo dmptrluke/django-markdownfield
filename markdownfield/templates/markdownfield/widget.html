@@ -6,7 +6,11 @@
 {% else %}<script type="text/javascript">{% endif %}
 (function() {
     const options = JSON.parse(document.getElementById('{{ options_id }}').textContent);
-    const toolbar = JSON.parse(document.getElementById('{{ toolbar_id }}').textContent);
+    const toolbar = JSON.parse(document.getElementById('{{ toolbar_id }}').textContent).map(function(item) {
+        // EasyMDE uses button names as CSS classes; 'table' conflicts with Bootstrap's .table
+        if (item === 'table') return {name: 'mdf-table', action: EasyMDE.drawTable, className: 'fa fa-table', title: 'Insert Table'};
+        return item;
+    });
     new EasyMDE(Object.assign({
         element: document.getElementById('{{ widget.attrs.id }}'),
         autoDownloadFontAwesome: false,

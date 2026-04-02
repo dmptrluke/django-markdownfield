@@ -6,7 +6,11 @@
 {% else %}<script type="text/javascript">{% endif %}
 (function() {
     const options = JSON.parse(document.getElementById('{{ options_id }}').textContent);
-    const toolbar = JSON.parse(document.getElementById('{{ toolbar_id }}').textContent);
+    const toolbar = JSON.parse(document.getElementById('{{ toolbar_id }}').textContent).map(function(item) {
+        // EasyMDE uses button names as CSS classes; 'table' conflicts with Bootstrap's .table
+        if (item === 'table') return {name: 'mdf-table', action: EasyMDE.drawTable, className: 'fa fa-table', title: 'Insert Table'};
+        return item;
+    });
     const editorOptions = Object.assign({
         element: document.getElementById('{{ widget.attrs.id }}'),
         autoDownloadFontAwesome: false,
@@ -17,8 +21,8 @@
         },
     }, options);
     {% if preview_url %}
-    const previewUrl = '{{ preview_url }}';
-    const validatorName = '{{ validator_name }}';
+    const previewUrl = '{{ preview_url|escapejs }}';
+    const validatorName = '{{ validator_name|escapejs }}';
 
     function getCookie(name) {
         let cookieValue = null;
@@ -58,7 +62,7 @@
                 if (data.html !== undefined) {
                     preview.innerHTML = data.html;
                 } else {
-                    preview.innerHTML = '<p>' + (data.error || 'Preview failed') + '</p>';
+                    preview.textContent = data.error || 'Preview failed';
                 }
             })
             .catch(function() {

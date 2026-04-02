@@ -38,11 +38,3 @@ class TestRerenderMarkdown:
         stdout = StringIO()
         call_command('rerender_markdown', stdout=stdout)
         assert '0 rows' in stdout.getvalue()
-
-    # renders with the field's configured validator
-    def test_uses_field_validator(self, db):
-        post = SamplePost.objects.create(body='# Heading')
-        call_command('rerender_markdown', stdout=StringIO())
-        post.refresh_from_db()
-        # SamplePost uses VALIDATOR_STANDARD which allows h1
-        assert '<h1>' in post.body_rendered

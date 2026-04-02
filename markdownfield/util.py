@@ -5,27 +5,42 @@ from django.conf import settings
 
 
 def process_links(html: str) -> str:
-    """Strip blacklisted links; optionally add target="_blank" and class="external" to external links."""
-    blacklist = getattr(settings, 'MARKDOWN_LINK_BLACKLIST', [])
-    mark_external_links = getattr(settings, 'MARKDOWN_MARK_EXTERNAL_LINKS', True)
+    """Strip blocked domain links; optionally add target="_blank" and class="external" to external links."""
+    blocked_domains = getattr(
+        settings,
+        'MARKDOWNFIELD_BLOCKED_LINK_DOMAINS',
+        getattr(settings, 'MARKDOWN_LINK_BLACKLIST', []),
+    )
+    mark_external_links = getattr(
+        settings,
+        'MARKDOWNFIELD_MARK_EXTERNAL_LINKS',
+        getattr(settings, 'MARKDOWN_MARK_EXTERNAL_LINKS', True),
+    )
+    internal_urls = getattr(
+        settings,
+        'MARKDOWNFIELD_INTERNAL_URL',
+        getattr(settings, 'SITE_URL', None),
+    )
 
-    if not blacklist and not mark_external_links:
+    if not blocked_domains and not mark_external_links:
         return html
 
-    if hasattr(settings, 'SITE_URL'):
-        site_netloc = urlparse(settings.SITE_URL).netloc
+    if internal_urls is None:
+        internal_netlocs = set()
+    elif isinstance(internal_urls, str):
+        internal_netlocs = {urlparse(internal_urls).netloc}
     else:
-        site_netloc = None
+        internal_netlocs = {urlparse(u).netloc for u in internal_urls}
 
-    if blacklist:
+    if blocked_domains:
 
-        def strip_blacklisted(match: re.Match) -> str:
+        def strip_blocked_domainsed(match: re.Match) -> str:
             href_match = re.search(r'href="([^"]*)"', match.group(0))
-            if href_match and urlparse(href_match.group(1)).netloc in blacklist:
+            if href_match and urlparse(href_match.group(1)).netloc in blocked_domains:
                 return match.group(1)
             return match.group(0)
 
-        html = re.sub(r'<a\b[^>]*>(.*?)</a>', strip_blacklisted, html, flags=re.DOTALL)
+        html = re.sub(r'<a\b[^>]*>(.*?)</a>', strip_blocked_domainsed, html, flags=re.DOTALL)
 
     if not mark_external_links:
         return html
@@ -44,7 +59,7 @@ def process_links(html: str) -> str:
         if not p.netloc:
             return tag
 
-        link_is_external = p.netloc != site_netloc if site_netloc else True
+        link_is_external = p.netloc not in internal_netlocs if internal_netlocs else True
 
         if not link_is_external:
             return tag

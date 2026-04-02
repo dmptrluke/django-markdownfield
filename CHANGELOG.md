@@ -1,5 +1,31 @@
 # Changelog
 
+## 0.18.0
+
+_If upgrading from 0.17.x or earlier: the default rendering backend has changed from python-markdown to markdown-it-py. Run `rerender_markdown` after upgrading. See breaking changes below._
+
+### Changed
+
+- **Breaking:** Default rendering backend switched to [markdown-it-py](https://github.com/executablebooks/markdown-it-py) (CommonMark 0.31.2). Rendered HTML may differ from python-markdown output. Run `rerender_markdown` after upgrading.
+- **Breaking:** Link processing settings renamed to `MARKDOWNFIELD_` prefix. Old names still work as fallbacks.
+  - `SITE_URL` -> `MARKDOWNFIELD_INTERNAL_URL` (now accepts a string or list)
+  - `MARKDOWN_LINK_BLACKLIST` -> `MARKDOWNFIELD_BLOCKED_LINK_DOMAINS`
+  - `MARKDOWN_MARK_EXTERNAL_LINKS` -> `MARKDOWNFIELD_MARK_EXTERNAL_LINKS`
+- **Breaking:** URL schemes restricted to `http`, `https`, and `mailto` by default (`MARKDOWN_URL_SCHEMES`). Previous versions used nh3's broader default set (24 schemes including `ssh`, `irc`, `magnet`, `sms`, etc.). Custom validators can widen this via the `url_schemes` field.
+- Table and strikethrough tags added to `MARKDOWN_TAGS` and buttons to `TOOLBAR_FULL`.
+- Added `style="text-align:..."` support on `<th>` and `<td>` for table column alignment.
+- `<iframe>`, `<script>`, and `<style>` tags now have their inner content stripped (not just the tag). Prevents content inside these tags from leaking into visible output.
+
+### Added
+
+- Swappable rendering backend via `MARKDOWNFIELD_BACKEND`. A python-markdown backend is included (`markdownfield.backends.pymarkdown`).
+- `MARKDOWNFIELD_PLUGINS` for loading markdown-it-py plugins.
+- `MARKDOWNFIELD_ALLOW_HTML` to disable raw HTML passthrough in the markdown-it-py backend.
+
+### Dependencies
+
+- Added `markdown-it-py>=4.0` and `mdit-py-plugins>=0.5.0`.
+
 ## 0.17.3 (2026-03-31)
 
 - Bump pygments dependency (security update)

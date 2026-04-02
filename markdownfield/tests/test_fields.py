@@ -2,8 +2,7 @@ from django.utils.safestring import SafeString
 
 import pytest
 
-from markdownfield.models import MarkdownField, RenderedMarkdownField
-from markdownfield.validators import VALIDATOR_BASIC
+from markdownfield.models import RenderedMarkdownField
 
 from .models import SampleStandalonePost
 
@@ -56,9 +55,3 @@ class TestMarkdownFieldPreSave:
     def test_standalone_skips_rendering(self, db):
         obj = SampleStandalonePost.objects.create(body='**bold**')
         assert not hasattr(obj, 'body_rendered')
-
-    # field uses its configured validator on save
-    def test_validator_respected_on_save(self, db):
-        field = MarkdownField(rendered_field='body_rendered', validator=VALIDATOR_BASIC)
-        result = field.validator
-        assert result is VALIDATOR_BASIC

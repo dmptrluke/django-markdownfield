@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "django-markdownfield"
-version = "0.18.3"
+version = "0.18.4"
 description = "A simple custom field for Django that can safely render Markdown and store it in the database."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -52,6 +52,7 @@ Changelog = "https://github.com/dmptrluke/django-markdownfield/blob/master/CHANG
 test = [
     "pytest",
     "pytest-django",
+    "django-markdownfield[pymarkdown]",
 ]
 
 [tool.pytest.ini_options]

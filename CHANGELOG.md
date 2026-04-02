@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.18.4
+
+### Fixed
+
+- Include `markdown` (python-markdown) in test dependencies so pymarkdown backend tests pass in CI.
+
 ## 0.18.3
 
 ### Fixed

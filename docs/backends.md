@@ -52,6 +52,10 @@ dependency.
 Uses [python-markdown](https://python-markdown.github.io/). For users migrating from an older
 version of django-markdownfield or who depend on python-markdown extensions.
 
+```console
+pip install django-markdownfield[pymarkdown]
+```
+
 ```python
 MARKDOWNFIELD_BACKEND = 'markdownfield.backends.pymarkdown'
 ```

@@ -63,17 +63,21 @@ wheels = [
 
 [[package]]
 name = "django-markdownfield"
-version = "0.18.1"
+version = "0.18.2"
 source = { editable = "." }
 dependencies = [
     { name = "django", version = "5.2.12", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12'" },
     { name = "django", version = "6.0.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
     { name = "linkify-it-py" },
-    { name = "markdown" },
     { name = "markdown-it-py" },
     { name = "mdit-py-plugins" },
     { name = "nh3" },
     { name = "shortuuid" },
+]
+
+[package.optional-dependencies]
+pymarkdown = [
+    { name = "markdown" },
 ]
 
 [package.dev-dependencies]
@@ -86,12 +90,13 @@ test = [
 requires-dist = [
     { name = "django", specifier = ">=4.2" },
     { name = "linkify-it-py", specifier = ">=2.0" },
-    { name = "markdown" },
+    { name = "markdown", marker = "extra == 'pymarkdown'" },
     { name = "markdown-it-py", specifier = ">=4.0" },
     { name = "mdit-py-plugins", specifier = ">=0.5.0" },
     { name = "nh3", specifier = ">=0.2.17" },
     { name = "shortuuid" },
 ]
+provides-extras = ["pymarkdown"]
 
 [package.metadata.requires-dev]
 test = [

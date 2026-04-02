@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.18.2
+
+### Changed
+
+- `markdown` (python-markdown) moved to an optional dependency. Install with `pip install django-markdownfield[pymarkdown]`.
+
 ## 0.18.1
 
 ### Added

@@ -29,7 +29,7 @@ INSTALLED_APPS = [
 MARKDOWNFIELD_BACKEND = 'markdownfield.backends.markdownit'
 ```
 
-Backend configuration (plugins, HTML passthrough, custom backends) is covered in [docs/backends.md](docs/backends.md).
+Backend configuration (plugins, HTML passthrough, custom backends) is covered in [docs/backends.md](docs/backends.md). A python-markdown backend is also included (`pip install django-markdownfield[pymarkdown]`).
 
 To enable the admin preview endpoint, add the URL configuration:
 

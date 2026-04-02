@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "django-markdownfield"
-version = "0.18.1"
+version = "0.18.2"
 description = "A simple custom field for Django that can safely render Markdown and store it in the database."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -34,9 +34,11 @@ dependencies = [
     "markdown-it-py>=4.0",
     "mdit-py-plugins>=0.5.0",
     "linkify-it-py>=2.0",
-    "markdown",
     "shortuuid",
 ]
+
+[project.optional-dependencies]
+pymarkdown = ["markdown"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["markdownfield"]

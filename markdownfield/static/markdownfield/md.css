@@ -1,3 +1,13 @@
+.EasyMDEContainer .editor-toolbar button {
+    border: 1px solid transparent;
+    margin: 0 1px;
+}
+
+.EasyMDEContainer .editor-toolbar button:hover,
+.EasyMDEContainer .editor-toolbar button.active {
+    border: 1px solid transparent;
+}
+
 .cm-s-easymde .cm-formatting-emoji {
     color: #183691;
 }

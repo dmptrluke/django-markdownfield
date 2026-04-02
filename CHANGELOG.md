@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.18.3
+
+### Fixed
+
+- Frontend editor toolbar buttons no longer show a border on hover.
+- Added 1px margin between toolbar buttons.
+
 ## 0.18.2
 
 ### Changed

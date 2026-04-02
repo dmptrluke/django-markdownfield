@@ -22,8 +22,14 @@ compliant renderer.
 MARKDOWNFIELD_BACKEND = 'markdownfield.backends.markdownit'
 ```
 
-**HTML passthrough:** Raw HTML in Markdown source is passed through to the sanitizer by default. To
-disable this (raw HTML is shown as literal text instead), set `MARKDOWNFIELD_ALLOW_HTML = False`.
+**Settings:**
+
+| Setting | Default | Description |
+|---|---|---|
+| `MARKDOWNFIELD_ALLOW_HTML` | `True` | Pass raw HTML through to the sanitizer. When `False`, raw HTML is shown as literal text. |
+| `MARKDOWNFIELD_LINKIFY` | `False` | Auto-link bare URLs (e.g. `https://example.com` becomes a clickable link without markdown syntax). |
+| `MARKDOWNFIELD_TYPOGRAPHER` | `False` | Enable typographic replacements: smart quotes, (c)/(tm)/(r) symbols, em/en dashes. |
+| `MARKDOWNFIELD_BREAKS` | `False` | Convert newlines in source to `<br>` tags. Without this, a single newline is ignored (standard CommonMark behavior). |
 
 **Plugins:** The markdown-it-py backend supports plugins via the `MARKDOWNFIELD_PLUGINS` setting.
 Each entry is a dotted path to a function that takes a `MarkdownIt` instance and modifies it in

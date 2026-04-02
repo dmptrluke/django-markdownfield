@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.18.1
+
+### Added
+
+- `MARKDOWNFIELD_LINKIFY` to auto-link bare URLs.
+- `MARKDOWNFIELD_TYPOGRAPHER` for smart quotes and typographic symbol replacements.
+- `MARKDOWNFIELD_BREAKS` to convert newlines to `<br>` tags.
+
+### Dependencies
+
+- Added `linkify-it-py>=2.0`.
+
 ## 0.18.0
 
 _If upgrading from 0.17.x or earlier: the default rendering backend has changed from python-markdown to markdown-it-py. Run `rerender_markdown` after upgrading. See breaking changes below._

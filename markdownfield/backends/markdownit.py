@@ -3,8 +3,15 @@ from django.utils.module_loading import import_string
 
 from markdown_it import MarkdownIt
 
-_allow_html = getattr(settings, 'MARKDOWNFIELD_ALLOW_HTML', True)
-md = MarkdownIt('default', {'html': _allow_html})
+md = MarkdownIt(
+    'default',
+    {
+        'html': getattr(settings, 'MARKDOWNFIELD_ALLOW_HTML', True),
+        'linkify': getattr(settings, 'MARKDOWNFIELD_LINKIFY', False),
+        'typographer': getattr(settings, 'MARKDOWNFIELD_TYPOGRAPHER', False),
+        'breaks': getattr(settings, 'MARKDOWNFIELD_BREAKS', False),
+    },
+)
 md.enable('strikethrough')
 
 for _plugin_path in getattr(settings, 'MARKDOWNFIELD_PLUGINS', []):

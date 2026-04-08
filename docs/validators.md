@@ -1,7 +1,11 @@
 # Validators
 
-Validators control HTML sanitization and editor toolbar configuration. Each `MarkdownField` takes a
-`validator` argument that determines which tags, attributes, and toolbar buttons are allowed.
+Validators control HTML sanitization. Each `MarkdownField` takes a
+`validator` argument that determines which tags, attributes.
+
+If no custom toolbar is configured, the validator chosen will also control
+which toolbar buttons are shown in the editor (hiding buttons for features
+which are blocked)
 
 ## Built-in validators
 
@@ -31,8 +35,8 @@ text = MarkdownField(rendered_field='text_rendered', validator=VALIDATOR_CLASSY)
 
 ### VALIDATOR_NO_IMAGES
 
-Everything in VALIDATOR_STANDARD except images. The image toolbar button is removed. For
-user-generated content where you want full formatting but not image embedding.
+Everything in VALIDATOR_STANDARD except images. For user-generated content where you want full 
+formatting but not image embedding.
 
 ```python
 from markdownfield.validators import VALIDATOR_NO_IMAGES
@@ -49,7 +53,9 @@ from markdownfield.validators import VALIDATOR_BASIC
 
 ### VALIDATOR_NULL
 
-Skips sanitization entirely. Arbitrary HTML passes through unchanged, including `<script>` tags. Any user who can edit this field can execute JavaScript in the browser of anyone who views the rendered output. **Do not use unless you fully control all content.**
+Skips sanitization entirely. Arbitrary HTML passes through unchanged, including `<script>` tags. Any
+user who can edit this field can execute JavaScript in the browser of anyone who views the rendered 
+output. **Do not use unless you fully control all content.**
 
 ```python
 from markdownfield.validators import VALIDATOR_NULL
@@ -70,10 +76,6 @@ VALIDATOR_COMMENTS = Validator(
     name='comments',
 )
 ```
-
-The `name` parameter registers the validator in the global `VALIDATORS` dict, making it available
-by name in template filters (`{{ text|render_markdown:"comments" }}`), the preview endpoint, and
-admin widgets.
 
 ### Extending built-in tag sets
 

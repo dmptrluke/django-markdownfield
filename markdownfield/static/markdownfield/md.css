@@ -63,6 +63,9 @@
 /* list markers: dimmed to separate structure from content */
 .cm-s-easymde .cm-formatting-list { color: #999; }
 
+/* horizontal rules: dimmed like list markers */
+.cm-s-easymde .cm-hr { color: #999; }
+
 /* syntax highlighting for fenced code blocks (requires optional CM5 mode files) */
 .cm-s-easymde .mdf-code-line .cm-keyword { color: #708; }
 .cm-s-easymde .mdf-code-line .cm-atom { color: #219; }

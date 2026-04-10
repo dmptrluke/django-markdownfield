@@ -39,15 +39,14 @@
     };
 
     // --- Code block line styling (CM5) ---
-    // Uses renderLine to check CM5's own mode state. Lines where the active
-    // inner mode isn't markdown get mdf-code-line on the <pre> wrapper for
-    // monospace styling. Lines without a language mode get cm-comment from
-    // the base markdown mode (already monospace via CSS).
+    // Lines inside a fenced code block get mdf-code-line for monospace styling.
+    // The markdown parser tracks fenced blocks via fencedEndRE in its state.
     function attachCodeLineClasses(cm) {
         cm.on('renderLine', function (cm, line, el) {
             var lineNo = cm.getLineNumber(line);
-            var mode = cm.getModeAt({line: lineNo, ch: 0});
-            if (mode.name !== 'markdown' && mode.name !== 'null') {
+            var state = cm.getStateAfter(lineNo, true);
+            var inner = state.base || state;
+            if (inner.fencedEndRE) {
                 el.classList.add('mdf-code-line');
             }
         });

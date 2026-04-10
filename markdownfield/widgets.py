@@ -8,7 +8,7 @@ from .validators import VALIDATORS
 
 class MDEWidget(widgets.Textarea):
     template_name = 'markdownfield/widget.html'
-    _utility_buttons = ['fullscreen', '|', 'guide']
+    _utility_buttons = ['fullscreen']
 
     def __init__(self, options=None, validator_name='standard', **kwargs):
         super().__init__(**kwargs)
@@ -50,7 +50,7 @@ class MDEWidget(widgets.Textarea):
 
 
 class MDEAdminWidget(MDEWidget):
-    _utility_buttons = ['fullscreen', '|', 'guide']
+    _utility_buttons = ['fullscreen']
 
     def __init__(self, options=None, validator_name='standard', preview_url=None, **kwargs):
         super().__init__(options=options, validator_name=validator_name, **kwargs)

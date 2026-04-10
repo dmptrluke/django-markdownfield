@@ -59,19 +59,16 @@ TOOLBAR_FULL = [
     'italic',
     'strikethrough',
     '|',
-    'heading-1',
-    'heading-2',
-    'heading-3',
-    '|',
+    'heading',
     'quote',
+    'code',
+    '|',
     'unordered-list',
     'ordered-list',
     '|',
-    'code',
     'link',
     'image',
     'table',
-    'horizontal-rule',
 ]
 
 

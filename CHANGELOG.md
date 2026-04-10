@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.20.0
+
+### Changed
+
+- Toolbar updated: three heading buttons replaced with a single cycling button (H1/H2/H3/H4), horizontal rule and guide removed, buttons regrouped into inline formatting, block (ish) formatting, lists, and insertions.
+- Code block background styling scoped to inline code only. Fenced code blocks and raw HTML blocks no longer get the grey background.
+- Fenced code block detection simplified to use parser state instead of mode sniffing, fixing false positives on raw HTML blocks.
+- Tilde fences (`~~~`) disabled in the editor to prevent strikethrough (`~~`) from accidentally opening a code block.
+- Horizontal rule syntax dimmed in the editor to match list markers.
+
 ## 0.19.0
 
 ### Changed

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.20.2
+
+### Changed
+
+- Dependency Bumps
+
 ## 0.20.0
 
 ### Changed

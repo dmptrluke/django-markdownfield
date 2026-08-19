@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.21.0
+
+### Changed
+
+- Dependency Bumps.
+- Stop Ruff failing lint due to Python blocks in Readme.
+- Update supported versions.
+
+
 ## 0.20.2
 
 ### Changed

@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.21.1
+
+### Changed
+
+- Update custom EasyMDE to v2.21.0
+
+
 ## 0.21.0
 
 ### Changed

@@ -77,6 +77,8 @@ The argument is a [validator](docs/validators.md) name. Defaults to `standard`.
 
 ### Render in Python
 
+If you want, you can also ignore all of the django-specific functionality and just call the markdown renderer+validator directly.
+
 ```python
 from markdownfield.rendering import render_markdown
 from markdownfield.validators import VALIDATOR_STANDARD
@@ -137,7 +139,7 @@ class PostForm(forms.ModelForm):
 
 ## Link processing
 
-These settings control post-sanitization link handling. They apply regardless of which backend is
+django-markdownfield can do some post-sanitization link processing. They apply regardless of which backend is
 used.
 
 | Setting | Default | Description |
